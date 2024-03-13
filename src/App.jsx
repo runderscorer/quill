@@ -1,34 +1,121 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import API from './helpers/API'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [
+    roomCode,
+    setRoomCode
+  ] = useState('')
+
+  const [
+    action,
+    setAction
+  ] = useState('')
+
+  const [
+    errorMessage,
+    setErrorMessage
+  ] = useState('')
+
+  const handleChange = (e) => {
+    setRoomCode(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    API.findRoom(roomCode)
+      .then(response => {
+
+      })
+      .catch((error) => {
+        setErrorMessage(error.response.data.errors)
+      })
+  }
+
+  const handleGoBack = () => { 
+    setAction('')
+    setErrorMessage('')
+    setRoomCode('')
+  }
+
+  const renderButtons = () => {
+    return (
+      <>
+        <button className="mb10" type="button" onClick={() => setAction('find')}>
+          Find Game
+        </button>
+        <button className="mb10" type="button" onClick={() => setAction('create')}>
+          Create Game
+        </button>
+      </>
+    )
+  }
+
+  const renderFindGame = () => {
+    return (
+      <>
+        <input
+          type="text"
+          placeholder="Enter Room Code"
+          value={roomCode}
+          onChange={handleChange}
+        />
+        <div className="actions">
+          <button type="submit">
+            Find Game
+          </button>
+          <button 
+            className="secondary-btn"
+            onClick={handleGoBack}
+            type="button" 
+          >
+            Back
+          </button>
+        </div>
+      </>
+    )
+  }
+
+  const renderCreateGame = () => {
+    return (
+      <>
+        <input
+          type="text"
+          placeholder="Enter Room Code"
+          value={roomCode}
+          onChange={handleChange}
+        />
+        <div className="actions">
+          <button type="submit">
+            Create Game
+          </button>
+          <button 
+            className="secondary-btn"
+            onClick={handleGoBack}
+            type="button" 
+          >
+            Back
+          </button>
+        </div>
+      </>
+    )
+  }
 
   return (
-    <>
+    <div className="start">
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+        <h1 className="mb40">Prose & Cons</h1>
+        <p className="error">
+          {errorMessage}
         </p>
+        <form onSubmit={handleSubmit}>
+          {action === '' && renderButtons()}
+          {action === 'find' && renderFindGame()}
+          {action === 'create' && renderCreateGame()}
+        </form>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
