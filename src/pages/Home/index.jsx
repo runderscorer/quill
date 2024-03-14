@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import './App.css'
-import API from './helpers/API'
+import './Home.css'
+import API from '../../helpers/API'
 
-function App() {
+function Home() {
   const [
     roomCode,
     setRoomCode
@@ -119,4 +119,4 @@ function App() {
   )
 }
 
-export default App
+export default Home
