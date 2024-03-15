@@ -1,0 +1,11 @@
+.game {
+  form {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+}

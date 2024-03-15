@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Home.css'
 import API from '../../helpers/API'
 
 function Home() {
+  let navigate = useNavigate()
+
   const [
     roomCode,
     setRoomCode
@@ -26,9 +29,9 @@ function Home() {
     e.preventDefault()
     API.findRoom(roomCode)
       .then(response => {
-
+        navigate(`/games/${roomCode}`, { state: response.data })
       })
-      .catch((error) => {
+      .catch(error => {
         setErrorMessage(error.response.data.errors)
       })
   }
