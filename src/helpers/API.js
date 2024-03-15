@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 export default class API {
-  static findRoom = (roomCode) => {
+  static findGame = (roomCode) => {
     return axios.get(`${import.meta.env.VITE_BACKEND_URL}/games/search?room_code=${roomCode}`)
+  }
+
+  static leaveGame = (playerId, roomCode) => {
+    return axios.delete(`${import.meta.env.VITE_BACKEND_URL}/players/${playerId}?room_code=${roomCode}`)
   }
 
   static createPlayer = (playerName, roomCode) => {

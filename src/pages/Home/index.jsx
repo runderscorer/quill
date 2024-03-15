@@ -27,7 +27,7 @@ function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    API.findRoom(roomCode)
+    API.findGame(roomCode)
       .then(response => {
         navigate(`/games/${roomCode}`, { state: response.data })
       })
