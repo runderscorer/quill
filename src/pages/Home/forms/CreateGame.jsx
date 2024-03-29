@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import API from '../../../helpers/API'
 import './CreateGame.css'
 
 function CreateGame({ handleGoBack, setErrorMessage }) {
+  const navigate = useNavigate()
+
   const [
     roomCode,
     setRoomCode
@@ -36,7 +39,8 @@ function CreateGame({ handleGoBack, setErrorMessage }) {
 
     API.createGame(playerName, roomCode)
       .then(response => {
-        console.log('response: ', response)
+        const gameData = {...response.data, hostId: response.data.data.attributes.host.id}
+        navigate(`/games/${roomCode}`, { state: gameData })
       })
       .catch(error => {
         setErrorMessage(error.response.data.errors[0])
@@ -48,15 +52,15 @@ function CreateGame({ handleGoBack, setErrorMessage }) {
       <input
         className="mb10"
         type="text"
-        placeholder="Enter Player Name"
-        value={playerName}
-        onChange={handleNameChange}
-      />
-      <input
-        type="text"
         placeholder="Enter Room Code"
         value={roomCode}
         onChange={handleRoomCodeChange}
+      />
+      <input
+        type="text"
+        placeholder="Enter Player Name"
+        value={playerName}
+        onChange={handleNameChange}
       />
       <div className="actions">
         <button type="submit">

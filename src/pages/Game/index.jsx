@@ -8,8 +8,9 @@ import API from '../../helpers/API'
 function Game() {
   const location = useLocation()
   const { state } = location
-  const { data: { attributes } } = state
+  const { data: { attributes }, hostId } = state
   const {
+    host: { name: hostName },
     room_code: roomCode,
   } = attributes
 
@@ -23,7 +24,7 @@ function Game() {
   const [
     playerId,
     setPlayerId
-  ] = useState(null)
+  ] = useState(hostId)
 
   const [
     gameInfo,
@@ -89,9 +90,17 @@ function Game() {
 
   const renderPlayerWaiting = () => (
     <div>
-      <p>Waiting for game to start...</p>
+      <p>Waiting for {hostName} to start the game...</p>
       <p>{playerName} is ready</p>
     
+      {
+        hostId === playerId && (
+          <button type="button" onClick={handleLeaveGame}>
+            Start Game
+          </button>
+        )
+      }
+
       <button type="button" onClick={handleLeaveGame}>
         Leave Game
       </button>
