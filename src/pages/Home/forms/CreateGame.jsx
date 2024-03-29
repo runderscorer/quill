@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 import API from '../../../helpers/API'
 import './CreateGame.css'
 
 function CreateGame({ handleGoBack, setErrorMessage }) {
   const navigate = useNavigate()
+  const context = useOutletContext()
+  const { setGameInfo, addPlayer } = context
 
   const [
     roomCode,
@@ -39,8 +41,10 @@ function CreateGame({ handleGoBack, setErrorMessage }) {
 
     API.createGame(playerName, roomCode)
       .then(response => {
-        const gameData = {...response.data, hostId: response.data.data.attributes.host.id}
-        navigate(`/games/${roomCode}`, { state: gameData })
+        const game = response.data.data.attributes
+        setGameInfo(game)
+        addPlayer(game.host)
+        navigate(`/games/${roomCode}`)
       })
       .catch(error => {
         setErrorMessage(error.response.data.errors[0])

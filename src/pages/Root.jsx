@@ -10,19 +10,8 @@ const Root = () => {
     return JSON.parse(localStorage.getItem('game')) || null
   } 
 
-  const getHost = () => {
-    const game = getGame()
-
-    if (!game) {
-      return null
-    }
-
-    return game.host  
-  }
-
   const [player, setPlayer] = useState(getPlayer)
   const [gameInfo, setGame] = useState(getGame)
-  const [host, setHost] = useState(getHost)
 
   const addPlayer = (player) => {
     console.log('Add player', player)
@@ -48,9 +37,7 @@ const Root = () => {
       removePlayer,
       player,
       setGameInfo,
-      gameInfo,
-      setHost,
-      host
+      gameInfo
     }}/>
   )
 }
