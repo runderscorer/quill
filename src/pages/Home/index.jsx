@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import CreateGame from './forms/CreateGame'
 import './Home.css'
 import API from '../../helpers/API'
 
@@ -19,7 +20,7 @@ function Home() {
   const [
     errorMessage,
     setErrorMessage
-  ] = useState('')
+  ] = useState(null)
 
   const handleChange = (e) => {
     setRoomCode(e.target.value)
@@ -44,20 +45,20 @@ function Home() {
 
   const renderButtons = () => {
     return (
-      <>
+      <div className="flex-col flex-center">
         <button className="mb10" type="button" onClick={() => setAction('find')}>
           Find Game
         </button>
         <button className="mb10" type="button" onClick={() => setAction('create')}>
           Create Game
         </button>
-      </>
+      </div>
     )
   }
 
   const renderFindGame = () => {
     return (
-      <>
+      <form className="flex-col flex-center" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Enter Room Code"
@@ -76,32 +77,7 @@ function Home() {
             Back
           </button>
         </div>
-      </>
-    )
-  }
-
-  const renderCreateGame = () => {
-    return (
-      <>
-        <input
-          type="text"
-          placeholder="Enter Room Code"
-          value={roomCode}
-          onChange={handleChange}
-        />
-        <div className="actions">
-          <button type="submit">
-            Create Game
-          </button>
-          <button 
-            className="secondary-btn"
-            onClick={handleGoBack}
-            type="button" 
-          >
-            Back
-          </button>
-        </div>
-      </>
+      </form>
     )
   }
 
@@ -112,11 +88,15 @@ function Home() {
         <p className="error">
           {errorMessage}
         </p>
-        <form onSubmit={handleSubmit}>
-          {action === '' && renderButtons()}
-          {action === 'find' && renderFindGame()}
-          {action === 'create' && renderCreateGame()}
-        </form>
+        {action === '' && renderButtons()}
+        {action === 'find' && renderFindGame()}
+        {
+          action === 'create' && 
+            <CreateGame 
+              handleGoBack={handleGoBack} 
+              setErrorMessage={setErrorMessage}
+            />
+        }
       </div>
     </div>
   )

@@ -1,6 +1,13 @@
 import axios from 'axios';
 
 export default class API {
+  static createGame = (hostName, roomCode) => {
+    return axios.post(`${import.meta.env.VITE_BACKEND_URL}/games`, {
+      host_name: hostName,
+      room_code: roomCode
+    })
+  }
+
   static findGame = (roomCode) => {
     return axios.get(`${import.meta.env.VITE_BACKEND_URL}/games/search?room_code=${roomCode}`)
   }
