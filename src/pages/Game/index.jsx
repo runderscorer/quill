@@ -5,30 +5,26 @@ import './Game.css'
 import API from '../../helpers/API'
 
 function Game() {
-  const location = useLocation()
-  const { state } = location
-  const { data: { attributes }, hostId } = state
-  const {
-    room_code: roomCode,
-  } = attributes
-
-  const hostName = 'testhost'
   const navigate = useNavigate()
+
   const context = useOutletContext()
+
+  const { 
+    addPlayer,
+    removePlayer,
+    player,
+    setGameInfo,
+    gameInfo
+  } = context
 
   const [
     playerName,
     setPlayerName
   ] = useState('')
 
-  const [
-    gameInfo,
-    setGameInfo
-  ] = useState({})
-
   useEffect(() => {
     const cable = ActionCable.createConsumer(`${import.meta.env.VITE_BACKEND_WS_URL}/cable`)
-    const gameChannel = cable.subscriptions.create({ channel: 'GameChannel', room_code: roomCode }, {
+    const gameChannel = cable.subscriptions.create({ channel: 'GameChannel', room_code: gameInfo.room_code }, {
       connected: () => {
         console.log('connected')
       },
@@ -52,9 +48,9 @@ function Game() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    API.createPlayer(playerName, roomCode)
+    API.createPlayer(playerName, gameInfo.room_code)
       .then(response => {
-        context.addPlayer(response.data.data.attributes)
+        addPlayer(response.data.data.attributes)
       })
       .catch(error => {
         console.error(error)
@@ -62,8 +58,9 @@ function Game() {
   }
 
   const handleLeaveGame = () => {
-    API.leaveGame(playerId, roomCode)
+    API.leaveGame(player.id, gameInfo.room_code)
       .then(response => {
+        removePlayer()
         navigate('/')
       })
   }
@@ -85,17 +82,9 @@ function Game() {
 
   const renderPlayerWaiting = () => (
     <div>
-      <p>Waiting for {hostName} to start the game...</p>
-      <p>{playerName} is ready</p>
+      <p>Waiting for {gameInfo.host.name} to start the game...</p>
+      <p>{player.name} is ready</p>
     
-      {/* {
-        hostId === playerId && (
-          <button type="button" onClick={handleLeaveGame}>
-            Start Game
-          </button>
-        )
-      } */}
-
       <button type="button" onClick={handleLeaveGame}>
         Leave Game
       </button>
@@ -109,7 +98,7 @@ function Game() {
   return (
     <div className='game'>
       <div>
-        <p>Room Code: {roomCode}</p>
+        <p>Room Code: {gameInfo.room_code}</p>
       </div>
 
       <div>
@@ -121,9 +110,8 @@ function Game() {
         </ul>
       </div>
 
-      {renderPlayerNameForm()}
-      {/* {!playerId && renderPlayerNameForm()} */}
-      {/* {playerId && renderPlayerWaiting()} */}
+      {!player && renderPlayerNameForm()}
+      {player && renderPlayerWaiting()}
     </div>
   )
 }
