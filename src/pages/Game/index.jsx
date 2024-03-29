@@ -1,6 +1,5 @@
-import { useState, useEffect, useReducer } from 'react'
-import { useLocation } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useLocation, useNavigate, useOutletContext } from 'react-router-dom'
 import ActionCable from 'actioncable'
 import './Game.css'
 import API from '../../helpers/API'
@@ -10,21 +9,17 @@ function Game() {
   const { state } = location
   const { data: { attributes }, hostId } = state
   const {
-    host: { name: hostName },
     room_code: roomCode,
   } = attributes
 
+  const hostName = 'testhost'
   const navigate = useNavigate()
+  const context = useOutletContext()
 
   const [
     playerName,
     setPlayerName
   ] = useState('')
-
-  const [
-    playerId,
-    setPlayerId
-  ] = useState(hostId)
 
   const [
     gameInfo,
@@ -59,7 +54,7 @@ function Game() {
     e.preventDefault()
     API.createPlayer(playerName, roomCode)
       .then(response => {
-        setPlayerId(response.data.data.attributes.id)
+        context.addPlayer(response.data.data.attributes)
       })
       .catch(error => {
         console.error(error)
@@ -93,13 +88,13 @@ function Game() {
       <p>Waiting for {hostName} to start the game...</p>
       <p>{playerName} is ready</p>
     
-      {
+      {/* {
         hostId === playerId && (
           <button type="button" onClick={handleLeaveGame}>
             Start Game
           </button>
         )
-      }
+      } */}
 
       <button type="button" onClick={handleLeaveGame}>
         Leave Game
@@ -126,8 +121,9 @@ function Game() {
         </ul>
       </div>
 
-      {!playerId && renderPlayerNameForm()}
-      {playerId && renderPlayerWaiting()}
+      {renderPlayerNameForm()}
+      {/* {!playerId && renderPlayerNameForm()} */}
+      {/* {playerId && renderPlayerWaiting()} */}
     </div>
   )
 }
