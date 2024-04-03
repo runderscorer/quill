@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { useLocation, useNavigate, useOutletContext } from 'react-router-dom'
+import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
 import ActionCable from 'actioncable'
 import './Game.css'
 import API from '../../helpers/API'
 
 function Game() {
   const navigate = useNavigate()
+  const params = useParams()
 
   const context = useOutletContext()
 
@@ -22,7 +23,17 @@ function Game() {
     setPlayerName
   ] = useState('')
 
-  useEffect(() => {
+  const findGame = () => {
+    API.findGame(params.roomCode)
+      .then(response => {
+        setGameInfo(response.data.data.attributes)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  const createGameSubscription = () => {
     const cable = ActionCable.createConsumer(`${import.meta.env.VITE_BACKEND_WS_URL}/cable`)
     const gameChannel = cable.subscriptions.create({ channel: 'GameChannel', room_code: gameInfo.room_code }, {
       connected: () => {
@@ -39,6 +50,14 @@ function Game() {
 
     return () => {
       cable.subscriptions.remove(gameChannel)
+    }
+  }
+
+  useEffect(() => {
+    if (!gameInfo) {
+      findGame()
+    } else {
+      return createGameSubscription()
     }
   }, [])
   
@@ -95,7 +114,7 @@ function Game() {
     gameInfo.player_names ? gameInfo.player_names.length : 0
   )
 
-  return (
+  return gameInfo && (
     <div className='game'>
       <div>
         <p>Room Code: {gameInfo.room_code}</p>
