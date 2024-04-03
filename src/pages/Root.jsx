@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import ActionCable from 'actioncable'
 
 const Root = () => {
   const getPlayer = () => {
@@ -12,6 +13,7 @@ const Root = () => {
 
   const [player, setPlayer] = useState(getPlayer)
   const [gameInfo, setGame] = useState(getGame)
+  const [gameSubscription, setGameSubscription] = useState(null)
 
   const addPlayer = (player) => {
     console.log('Add player', player)
@@ -30,6 +32,34 @@ const Root = () => {
     setGame(game)
     localStorage.setItem('game', JSON.stringify(game))
   }
+
+  const createGameSubscription = () => {
+    const cable = ActionCable.createConsumer(`${import.meta.env.VITE_BACKEND_WS_URL}/cable`)
+    const gameChannel = cable.subscriptions.create({ channel: 'GameChannel', room_code: gameInfo.room_code }, {
+      connected: () => {
+        console.log('connected')
+      },
+      received: (data) => {
+        console.log('received: ', data)
+        setGameInfo(data.game.data.attributes)
+      },
+      disconnected: () => {
+        console.log('disconnected')
+      }
+    })
+
+    setGameSubscription(gameChannel)
+
+    return () => {
+      cable.subscriptions.remove(gameChannel)
+    }
+  }
+
+  useEffect(() => {
+    if (gameInfo && !gameSubscription) {
+      createGameSubscription()
+    }
+  }, [gameInfo, gameSubscription])
 
   return (
     <Outlet context={{ 

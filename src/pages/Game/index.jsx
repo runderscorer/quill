@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
-import ActionCable from 'actioncable'
 import './Game.css'
 import API from '../../helpers/API'
 
@@ -33,31 +32,9 @@ function Game() {
       })
   }
 
-  const createGameSubscription = () => {
-    const cable = ActionCable.createConsumer(`${import.meta.env.VITE_BACKEND_WS_URL}/cable`)
-    const gameChannel = cable.subscriptions.create({ channel: 'GameChannel', room_code: gameInfo.room_code }, {
-      connected: () => {
-        console.log('connected')
-      },
-      received: (data) => {
-        console.log('received: ', data)
-        setGameInfo(data.game.data.attributes)
-      },
-      disconnected: () => {
-        console.log('disconnected')
-      }
-    })
-
-    return () => {
-      cable.subscriptions.remove(gameChannel)
-    }
-  }
-
   useEffect(() => {
     if (!gameInfo) {
       findGame()
-    } else {
-      return createGameSubscription()
     }
   }, [])
   
