@@ -54,7 +54,7 @@ function Game() {
   }
 
   const handleLeaveGame = () => {
-    API.leaveGame(player.id, gameInfo.room_code)
+    API.leaveGame(player.id)
       .then(response => {
         removePlayer()
         navigate('/')

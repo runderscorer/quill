@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import ActionCable from 'actioncable'
+import API from '../helpers/API'
 
 const Root = () => {
   const getPlayer = () => {
-    return JSON.parse(localStorage.getItem('player')) || null
+    return JSON.parse(sessionStorage.getItem('player')) || null
   }
 
   const getGame = () => {
-    return JSON.parse(localStorage.getItem('game')) || null
+    return JSON.parse(sessionStorage.getItem('game')) || null
   } 
 
   const [player, setPlayer] = useState(getPlayer)
@@ -18,19 +19,20 @@ const Root = () => {
   const addPlayer = (player) => {
     console.log('Add player', player)
     setPlayer(player)
-    localStorage.setItem('player', JSON.stringify(player))
+    gameSubscription.setPlayerId(player.id)
+    sessionStorage.setItem('player', JSON.stringify(player))
   }
 
   const removePlayer = () => {
     console.log('Remove player')
     setPlayer(null)
-    localStorage.removeItem('player')
+    sessionStorage.removeItem('player')
   }
 
   const setGameInfo = (game) => {
     console.log('Set game', game)
     setGame(game)
-    localStorage.setItem('game', JSON.stringify(game))
+    sessionStorage.setItem('game', JSON.stringify(game))
   }
 
   const createGameSubscription = () => {
@@ -45,13 +47,16 @@ const Root = () => {
       },
       disconnected: () => {
         console.log('disconnected')
+      },
+      setPlayerId: (playerId) => {
+        gameChannel.perform('set_player_id', { player_id: playerId })
       }
     })
 
     setGameSubscription(gameChannel)
 
     return () => {
-      cable.subscriptions.remove(gameChannel)
+      gameChannel.unsubscribe()
     }
   }
 
@@ -67,7 +72,8 @@ const Root = () => {
       removePlayer,
       player,
       setGameInfo,
-      gameInfo
+      gameInfo,
+      gameSubscription
     }}/>
   )
 }
