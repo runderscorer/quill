@@ -13,8 +13,10 @@ function Game() {
     addPlayer,
     removePlayer,
     player,
-    setGameInfo,
-    gameInfo
+    handleSetIsHost,
+    handleSetGameInfo,
+    gameInfo,
+    isHost
   } = context
 
   const [
@@ -25,7 +27,7 @@ function Game() {
   const findGame = () => {
     API.findGame(params.roomCode)
       .then(response => {
-        setGameInfo(response.data.data.attributes)
+        handleSetGameInfo(response.data.data.attributes)
       })
       .catch(error => {
         console.error(error)
@@ -37,6 +39,10 @@ function Game() {
       findGame()
     }
   }, [])
+
+  useEffect(() => {
+    handleSetIsHost()
+  }, [gameInfo, player])
   
   const handleChange = (e) => {
     setPlayerName(e.target.value)
@@ -76,10 +82,21 @@ function Game() {
     </form>
   ) 
 
+  const renderStartGame = () => {
+    isHost &&
+      <div>
+        <button type="button" onClick={() => {}}>
+          Start Game
+        </button>
+      </div>
+  }
+
   const renderPlayerWaiting = () => (
     <div>
       <p>Waiting for {gameInfo.host.name} to start the game...</p>
       <p>{player.name} is ready</p>
+
+      {renderStartGame()}
     
       <button type="button" onClick={handleLeaveGame}>
         Leave Game

@@ -5,21 +5,31 @@ import API from '../helpers/API'
 
 const Root = () => {
   const getPlayer = () => {
+    console.log('in getPlayer')
     return JSON.parse(sessionStorage.getItem('player')) || null
   }
 
   const getGame = () => {
+    console.log('in getGame')
     return JSON.parse(sessionStorage.getItem('game')) || null
   } 
 
   const [player, setPlayer] = useState(getPlayer)
-  const [gameInfo, setGame] = useState(getGame)
+  const [gameInfo, setGameInfo] = useState(getGame)
   const [gameSubscription, setGameSubscription] = useState(null)
+  const [isHost, setIsHost] = useState(false)
+
+  const checkIfHost = (player) => {
+    return false
+    // const {host} = gameInfo
+
+    // return host && host.id == player.id
+  }
 
   const addPlayer = (player) => {
     console.log('Add player', player)
     setPlayer(player)
-    gameSubscription.setPlayerId(player.id)
+    console.log('gameSubscription: ', gameSubscription)
     sessionStorage.setItem('player', JSON.stringify(player))
   }
 
@@ -29,9 +39,10 @@ const Root = () => {
     sessionStorage.removeItem('player')
   }
 
-  const setGameInfo = (game) => {
-    console.log('Set game', game)
-    setGame(game)
+  const handleSetGameInfo = (game) => {
+    console.log('Set game for:', game)
+    setGameInfo(game)
+    console.log('game is set: ', gameInfo)
     sessionStorage.setItem('game', JSON.stringify(game))
   }
 
@@ -53,6 +64,8 @@ const Root = () => {
       }
     })
 
+    console.log('gameChannel: ', gameChannel)
+
     setGameSubscription(gameChannel)
 
     return () => {
@@ -60,20 +73,29 @@ const Root = () => {
     }
   }
 
+  const handleSetIsHost = () => {
+    console.log('in handleSetIsHost...')
+    console.log('in handleSetIsHost player', player)
+    console.log('in handleSetIsHost gameInfo', gameInfo)
+    player && gameInfo && setIsHost(player.id === gameInfo.host.id)    
+  }
+
   useEffect(() => {
     if (gameInfo && !gameSubscription) {
       createGameSubscription()
     }
-  }, [gameInfo, gameSubscription])
+  })
 
   return (
     <Outlet context={{ 
       addPlayer,
       removePlayer,
       player,
-      setGameInfo,
+      handleSetGameInfo,
+      handleSetIsHost,
       gameInfo,
-      gameSubscription
+      gameSubscription,
+      isHost
     }}/>
   )
 }

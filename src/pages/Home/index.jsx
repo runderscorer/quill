@@ -7,7 +7,7 @@ import API from '../../helpers/API'
 function Home() {
   let navigate = useNavigate()
   const context = useOutletContext()
-  const { setGameInfo } = context
+  const { handleSetGameInfo } = context
 
   const [
     roomCode,
@@ -32,7 +32,7 @@ function Home() {
     e.preventDefault()
     API.findGame(roomCode)
       .then(response => {
-        setGameInfo(response.data.data.attributes)
+        handleSetGameInfo(response.data.data.attributes)
         navigate(`/games/${roomCode}`, { state: response.data })
       })
       .catch(error => {

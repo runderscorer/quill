@@ -6,7 +6,12 @@ import './CreateGame.css'
 function CreateGame({ handleGoBack, setErrorMessage }) {
   const navigate = useNavigate()
   const context = useOutletContext()
-  const { setGameInfo, addPlayer } = context
+  const { 
+    gameSubscription, 
+    gameInfo,
+    handleSetGameInfo, 
+    addPlayer 
+  } = context
 
   const [
     roomCode,
@@ -42,12 +47,15 @@ function CreateGame({ handleGoBack, setErrorMessage }) {
     API.createGame(playerName, roomCode)
       .then(response => {
         const game = response.data.data.attributes
-        setGameInfo(game)
+        console.log('setting gameInfo for: ', game)
+        handleSetGameInfo(game)
+        console.log('gameInfo is set: ', gameInfo)
         addPlayer(game.host)
         navigate(`/games/${roomCode}`)
       })
       .catch(error => {
-        setErrorMessage(error.response.data.errors[0])
+        console.log("CREATE GAME ERROR: ", error)
+        setErrorMessage(error.response.data.errors)
       })
   }
 
