@@ -12,8 +12,8 @@ export default class API {
     return axios.get(`${import.meta.env.VITE_BACKEND_URL}/games/search?room_code=${roomCode}`)
   }
 
-  static leaveGame = (playerId) => {
-    return axios.delete(`${import.meta.env.VITE_BACKEND_URL}/players/${playerId}`)
+  static startGame = (roomCode) => {
+    return axios.patch(`${import.meta.env.VITE_BACKEND_URL}/games/${roomCode}/start`)
   }
 
   static createPlayer = (playerName, roomCode) => {
@@ -27,5 +27,9 @@ export default class API {
     return axios.put(`${import.meta.env.VITE_BACKEND_URL}/players/${playerId}`, {
       name: playerName
     })
+  }
+
+  static leaveGame = (playerId) => {
+    return axios.delete(`${import.meta.env.VITE_BACKEND_URL}/players/${playerId}`)
   }
 }

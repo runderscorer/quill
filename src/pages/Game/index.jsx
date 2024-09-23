@@ -67,6 +67,13 @@ function Game() {
       })
   }
 
+  const handleStartGameClick = () => {
+    API.startGame(gameInfo.room_code)
+      .then(response => {
+        console.log('game started: ', response)
+      })
+  }
+
   const renderPlayerNameForm = () => (
     <form onSubmit={handleSubmit}>
       <p>Enter your name to join</p>
@@ -82,14 +89,14 @@ function Game() {
     </form>
   ) 
 
-  const renderStartGame = () => {
+  const renderStartGame = () => (
     isHost &&
       <div>
-        <button type="button" onClick={() => {}}>
+        <button type="button" onClick={handleStartGameClick}>
           Start Game
         </button>
       </div>
-  }
+  )
 
   const renderPlayerWaiting = () => (
     <div>
