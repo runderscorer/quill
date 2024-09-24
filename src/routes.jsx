@@ -1,6 +1,7 @@
 import Root from './pages/Root'
-import Game from './pages/Game'
 import Home from './pages/Home'
+import Lobby from './pages/Lobby'
+import Game from './pages/Game'
 
 export const routes = [
   {
@@ -13,6 +14,10 @@ export const routes = [
       },
       {
         path: '/games/:roomCode',
+        element: <Lobby />
+      },
+      {
+        path: '/games/:roomCode/play',
         element: <Game />
       }
     ]

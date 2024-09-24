@@ -19,13 +19,6 @@ const Root = () => {
   const [gameSubscription, setGameSubscription] = useState(null)
   const [isHost, setIsHost] = useState(false)
 
-  const checkIfHost = (player) => {
-    return false
-    // const {host} = gameInfo
-
-    // return host && host.id == player.id
-  }
-
   const addPlayer = (player) => {
     console.log('Add player', player)
     setPlayer(player)
