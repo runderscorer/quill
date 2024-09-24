@@ -32,4 +32,14 @@ export default class API {
   static leaveGame = (playerId) => {
     return axios.delete(`${import.meta.env.VITE_BACKEND_URL}/players/${playerId}`)
   }
+
+  static submitResponse = (text, playerId, roomCode) => {
+    console.log('submitResponse - ', text, playerId, roomCode)
+
+    return axios.post(`${import.meta.env.VITE_BACKEND_URL}/responses`, {
+      text,
+      player_id: playerId,
+      room_code: roomCode
+    })
+  }
 }
