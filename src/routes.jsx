@@ -1,7 +1,7 @@
 import Root from './pages/Root'
-import Home from './pages/Home'
-import Lobby from './pages/Lobby'
-import Game from './pages/Game'
+import Home from './pages/home'
+import Lobby from './pages/lobby'
+import Game from './pages/game'
 
 export const routes = [
   {

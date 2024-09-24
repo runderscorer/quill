@@ -1,0 +1,20 @@
+.game {
+  font-size: 20px;
+  border: 1px solid #ccc;
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 100px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.underline {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.italic {
+  font-style: italic;
+}

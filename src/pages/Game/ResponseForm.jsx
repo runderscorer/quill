@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
-import API from '../../../helpers/API'
+import API from '../../helpers/API'
 
 function ResponseForm() {
   const [
@@ -10,7 +10,7 @@ function ResponseForm() {
 
   const context = useOutletContext()
 
-  const { gameInfo, player } = context
+  const { gameInfo, player, handleSetGameInfo } = context
   const { room_code: roomCode } = gameInfo
 
   const handleChange = (e) => {
@@ -26,14 +26,17 @@ function ResponseForm() {
       responseText,
       playerId,
       roomCode
-    )
+    ).then(response => {
+      handleSetGameInfo(response.data.game.data.attributes)
+      setResponseText('') 
+    })
   }
 
   return (
     <div>
       <div>
         <p>
-          Complete the verse!
+          Enter your response
         </p>
       </div>
       <form onSubmit={handleSubmit}>

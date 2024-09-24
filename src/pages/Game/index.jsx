@@ -1,30 +1,34 @@
 import { useParams, useOutletContext } from 'react-router-dom'
-import ResponseForm from './forms/ResponseForm'
+import './Game.css'
+import Responses from './Responses'
+import ResponseForm from './ResponseForm'
 
 function Game() {
-  const params = useParams()
   const context = useOutletContext()
-
   const { gameInfo } = context
   const { current_prompt: currentPrompt, round } = gameInfo
 
   return (
     <div>
-      <div>
-        <p>
-          {`Round ${round}`}
-        </p>
+      <div className='game'>
+        <div className='underline'>
+          <p className='bold'>
+            {`Round ${round}`}
+          </p>
+          <p>
+            {`by ${currentPrompt.author}`}
+          </p>
+        </div>
+        <div>
+          <p className='italic'>
+            {currentPrompt.text}
+          </p>
+          <p>
+            ...
+          </p>
+        </div>
       </div>
-      <div>
-        <p>
-          {currentPrompt.text}
-        </p>
-      </div>
-      <div>
-        <p>
-          {`- ${currentPrompt.author}`}
-        </p>
-      </div>
+      <Responses />
       <ResponseForm />
     </div>
   )
