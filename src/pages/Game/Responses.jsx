@@ -1,20 +1,14 @@
-import { useOutletContext } from "react-router-dom"
 import Response from './Response'
 
-function Responses() {
-  const context = useOutletContext()
-  const { gameInfo } = context;
-  const { current_prompt: currentPrompt } = gameInfo
-  const { responses } = currentPrompt
-
+function Responses({ responses }) {
   return (
-    <div>
-      <p>Complete the poem by selecting a response below:</p>
+    <div className='responses-container'>
+      <p>Each choice is a seed -- nurture it wisely and select a response below:</p>
       <div>
         {responses.map(response => 
           <Response 
             key={`response-${response.id}`}
-            response={response} 
+            response={response.attributes} 
           />
         )}
       </div>

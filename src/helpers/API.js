@@ -42,4 +42,12 @@ export default class API {
       room_code: roomCode
     })
   }
+
+  static submitVote = (responseId, playerId, roomCode) => {
+    return axios.post(`${import.meta.env.VITE_BACKEND_URL}/votes`, {
+      response_id: responseId,
+      player_id: playerId,
+      room_code: roomCode
+    })
+  }
 }

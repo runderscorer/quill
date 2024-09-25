@@ -33,9 +33,7 @@ const Root = () => {
   }
 
   const handleSetGameInfo = (game) => {
-    console.log('Set game for:', game)
     setGameInfo(game)
-    console.log('game is set: ', gameInfo)
     sessionStorage.setItem('game', JSON.stringify(game))
   }
 

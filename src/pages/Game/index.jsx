@@ -7,6 +7,7 @@ function Game() {
   const context = useOutletContext()
   const { gameInfo } = context
   const { current_prompt: currentPrompt, round } = gameInfo
+  const { responses } = currentPrompt
 
   return (
     <div>
@@ -28,7 +29,7 @@ function Game() {
           </p>
         </div>
       </div>
-      <Responses />
+      {responses.data.length > 0 && <Responses responses={responses.data} />}
       <ResponseForm />
     </div>
   )

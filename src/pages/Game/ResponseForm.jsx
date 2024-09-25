@@ -10,7 +10,7 @@ function ResponseForm() {
 
   const context = useOutletContext()
 
-  const { gameInfo, player, handleSetGameInfo } = context
+  const { gameInfo, player } = context
   const { room_code: roomCode } = gameInfo
 
   const handleChange = (e) => {
@@ -27,16 +27,16 @@ function ResponseForm() {
       playerId,
       roomCode
     ).then(response => {
-      handleSetGameInfo(response.data.game.data.attributes)
+      console.log('responses form response: ', response)
       setResponseText('') 
     })
   }
 
   return (
-    <div>
+    <div className='response-form'>
       <div>
         <p>
-          Enter your response
+          Let your fingers dance with the rhythm of your thoughts -- complete the poem!  
         </p>
       </div>
       <form onSubmit={handleSubmit}>
@@ -45,9 +45,11 @@ function ResponseForm() {
           name='response'
           value={responseText}
         />
-        <button type='submit'>
-          Submit
-        </button>
+        <div className='actions'>
+          <button type='submit'>
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   )

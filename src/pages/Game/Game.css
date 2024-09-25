@@ -3,7 +3,7 @@
   border: 1px solid #ccc;
   padding: 25px;
   border-radius: 10px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .bold {
@@ -17,4 +17,40 @@
 
 .italic {
   font-style: italic;
+}
+
+.response-form {
+  p {
+    text-align: left;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      height: 20px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.responses-container {
+  margin-bottom: 50px;
+
+  p {
+    text-align: left;
+  }
+}
+
+.response-container {
+  margin-bottom: 10px;
+
+  .response {
+    width: 100%;
+  }
 }
