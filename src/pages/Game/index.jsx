@@ -1,36 +1,25 @@
+import { useEffect } from 'react'
 import { useParams, useOutletContext } from 'react-router-dom'
 import './Game.css'
-import Responses from './Responses'
-import ResponseForm from './ResponseForm'
+import Helper from '../../helpers/Helper'
+import GameScreen from './GameScreen'
+import Loading from '../../components/Loading'
 
 function Game() {
   const context = useOutletContext()
-  const { gameInfo } = context
-  const { current_prompt: currentPrompt, round } = gameInfo
-  const { responses } = currentPrompt
+  const params = useParams()
+  const { gameInfo, handleSetGameInfo } = context
+
+  useEffect(() => {
+    console.log('params: ', params)
+    if (!gameInfo) {
+      Helper.findGame(params.roomCode, handleSetGameInfo)
+    }
+  }, [])
 
   return (
     <div>
-      <div className='game'>
-        <div className='underline'>
-          <p className='bold'>
-            {`Round ${round}`}
-          </p>
-          <p>
-            {`by ${currentPrompt.author}`}
-          </p>
-        </div>
-        <div>
-          <p className='italic'>
-            {currentPrompt.text}
-          </p>
-          <p>
-            ...
-          </p>
-        </div>
-      </div>
-      {responses.data.length > 0 && <Responses responses={responses.data} />}
-      <ResponseForm />
+      {gameInfo ? <GameScreen /> : <Loading />}
     </div>
   )
 }

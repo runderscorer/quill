@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
 import './Lobby.css'
 import API from '../../helpers/API'
+import Helper from '../../helpers/Helper'
 
 function Lobby() {
   const navigate = useNavigate()
@@ -24,19 +25,9 @@ function Lobby() {
     setPlayerName
   ] = useState('')
 
-  const findGame = () => {
-    API.findGame(params.roomCode)
-      .then(response => {
-        handleSetGameInfo(response.data.data.attributes)
-      })
-      .catch(error => {
-        console.error(error)
-      })
-  }
-
   useEffect(() => {
     if (!gameInfo) {
-      findGame()
+      Helper.findGame(params.roomCode, handleSetGameInfo)
     }
   }, [])
 
