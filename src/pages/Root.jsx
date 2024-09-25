@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import ActionCable from 'actioncable'
 import API from '../helpers/API'
 
 const Root = () => {
+  const navigate = useNavigate()
+
   const getPlayer = () => {
     console.log('in getPlayer')
     return JSON.parse(sessionStorage.getItem('player')) || null
@@ -45,7 +47,8 @@ const Root = () => {
       },
       received: (data) => {
         console.log('received: ', data)
-        setGameInfo(data.game.data.attributes)
+        handleSetGameInfo(data.game.data.attributes)
+        data.type === 'GAME_STARTED' && navigate(`/games/${gameInfo.room_code}/play`)
       },
       disconnected: () => {
         console.log('disconnected')

@@ -74,8 +74,7 @@ function Lobby() {
   const handleStartGameClick = () => {
     API.startGame(gameInfo.room_code)
       .then(response => {
-        handleSetGameInfo(response.data.data.attributes)
-        navigate(`/games/${gameInfo.room_code}/play`)
+        console.log('response: ', response)
       })
       .catch(error => {
         console.error('error: ', error)

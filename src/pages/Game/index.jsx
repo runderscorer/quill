@@ -11,7 +11,6 @@ function Game() {
   const { gameInfo, handleSetGameInfo } = context
 
   useEffect(() => {
-    console.log('params: ', params)
     if (!gameInfo) {
       Helper.findGame(params.roomCode, handleSetGameInfo)
     }

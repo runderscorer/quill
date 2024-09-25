@@ -34,9 +34,6 @@ function ResponseForm() {
     setPlayerResponse(playerResponse)
   }, [gameInfo])
 
-  console.log('responseData: ', responseData)
-  console.log('playerResponse: ', playerResponse)
-
   const handleChange = (e) => {
     setResponseText(e.target.value)
   }
