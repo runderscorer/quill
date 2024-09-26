@@ -55,7 +55,7 @@ function ResponseForm() {
   const renderPlayerResponse = () => (
     <div className='player-response-container'>
       <p className='bold italic'>
-        {CopyGenerator.playerResponse()}
+        {CopyGenerator.playerResponseHeader()}
       </p>
       <div className='player-response'>
         {playerResponse.text}

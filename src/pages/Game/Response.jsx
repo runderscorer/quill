@@ -1,7 +1,7 @@
 import API from "../../helpers/API"
 import { useOutletContext } from "react-router-dom"
 
-function Response({ response }) {
+function Response({ response, disabled, votedResponseId }) {
   const context = useOutletContext()
   const { gameInfo, player } = context
   const { room_code: roomCode } = gameInfo
@@ -22,7 +22,8 @@ function Response({ response }) {
   return (
     <div className='response-container'>
       <button 
-        className='response'
+        className={votedResponseId === response.id ? 'response voted' : 'response'}
+        disabled={disabled}
         onClick={handleClick}
         value={response.id}
       >

@@ -52,6 +52,11 @@
 
   .response {
     width: 100%;
+
+    &.voted {
+      background: antiquewhite;
+      color:#242424
+    }
   }
 }
 
