@@ -1,12 +1,12 @@
 import { useOutletContext } from "react-router-dom"
 import ResponseForm from "./ResponseForm"
 import Responses from "./Responses"
-import { render } from "react-dom"
+import Scoreboard from "./Scoreboard"
 
 function GameScreen() {
   const context = useOutletContext()
   const { gameInfo } = context
-  const { current_prompt: currentPrompt, round, status } = gameInfo
+  const { current_prompt: currentPrompt, players, round, status } = gameInfo
   const { responses } = currentPrompt
 
   const renderResponseForm = () => (
@@ -15,6 +15,14 @@ function GameScreen() {
 
   const renderResponses = () => (
     status === 'gathering_votes' && <Responses responses={responses.data} />
+  )
+
+  const renderScoreboard = () => (
+    status === 'viewing_scores' && 
+      <Scoreboard 
+        players={players.data}
+        responses={responses.data} 
+      />
   )
 
   return (
@@ -39,6 +47,7 @@ function GameScreen() {
       </div>
       {renderResponses()}
       {renderResponseForm()}
+      {renderScoreboard()}
     </div>
   )
 }

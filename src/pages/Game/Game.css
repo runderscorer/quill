@@ -57,6 +57,11 @@
       background: antiquewhite;
       color:#242424
     }
+
+    &.correct {
+      background: mediumseagreen;
+      color: #242424;
+    }
   }
 }
 
@@ -75,6 +80,53 @@
       width: 45%;
       background: #242424;
       color: antiquewhite;
+    }
+  }
+}
+
+.scoreboard {
+  .response {
+    background: antiquewhite;
+    color: #242424;
+    border-top: 1px solid #ccc;;
+    border-bottom: none;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    overflow: auto;
+
+    &.correct {
+      background: mediumseagreen;
+    }
+  }
+
+  .results {
+    border-top: none;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+
+    .details {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .points {
+      display: flex;
+      font-weight: bold;
+      font-size: 24px;
+      color: antiquewhite;
+      justify-content: flex-start;
+
+      &.correct {
+        color: mediumseagreen;
+        justify-content: flex-end;
+      }
     }
   }
 }
