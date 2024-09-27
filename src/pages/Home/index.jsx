@@ -1,13 +1,12 @@
 import { useState } from 'react'
-import { useNavigate, useOutletContext } from 'react-router-dom'
+import { useOutletContext } from 'react-router-dom'
 import CreateGame from './forms/CreateGame'
 import './Home.css'
 import API from '../../helpers/API'
 
 function Home() {
-  let navigate = useNavigate()
   const context = useOutletContext()
-  const { handleSetGameInfo } = context
+  const { handleSetGameInfo, navigate } = context
 
   const [
     roomCode,

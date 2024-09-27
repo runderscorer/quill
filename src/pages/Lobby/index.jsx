@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
+import { useParams, useOutletContext } from 'react-router-dom'
 import './Lobby.css'
 import API from '../../helpers/API'
 import Helper from '../../helpers/Helper'
 
 function Lobby() {
-  const navigate = useNavigate()
   const params = useParams()
 
   const context = useOutletContext()
@@ -17,7 +16,8 @@ function Lobby() {
     handleSetIsHost,
     handleSetGameInfo,
     gameInfo,
-    isHost
+    isHost,
+    navigate
   } = context
 
   const [

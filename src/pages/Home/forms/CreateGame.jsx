@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import { useNavigate, useOutletContext } from 'react-router-dom'
+import { useOutletContext } from 'react-router-dom'
 import API from '../../../helpers/API'
 import './CreateGame.css'
 
 function CreateGame({ handleGoBack, setErrorMessage }) {
-  const navigate = useNavigate()
   const context = useOutletContext()
   const { 
     gameChannel,
     gameInfo,
     handleSetGameInfo, 
+    navigate,
     addPlayer 
   } = context
 

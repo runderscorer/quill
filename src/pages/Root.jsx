@@ -74,6 +74,7 @@ const Root = () => {
   return (
     <Outlet context={{ 
       addPlayer,
+      navigate,
       removePlayer,
       player,
       handleSetGameInfo,
