@@ -1,8 +1,8 @@
+import { useEffect } from "react"
 import { useOutletContext } from "react-router-dom"
 import ResponseForm from "./ResponseForm"
 import Responses from "./Responses"
 import RoundResults from "./RoundResults"
-import Scoreboard from "./Scoreboard"
 
 function GameScreen() {
   const context = useOutletContext()
@@ -16,6 +16,14 @@ function GameScreen() {
     max_rounds: maxRounds 
   } = gameInfo
   const { responses } = currentPrompt
+
+  useEffect(() => {
+    const { status } = gameInfo
+
+    if (status === 'game_over') {
+      context.navigate(`/games/${roomCode}/game_over`)
+    }
+  }, [gameInfo])
 
   const renderResponseForm = () => (
     status === 'gathering_responses' && <ResponseForm />
@@ -33,11 +41,6 @@ function GameScreen() {
         responses={responses.data} 
         roomCode={roomCode}
       />
-  )
-
-  const renderFinalScores = () => (
-    status === 'game_over' &&
-      <Scoreboard />
   )
 
   return (
@@ -63,7 +66,6 @@ function GameScreen() {
       {renderResponses()}
       {renderResponseForm()}
       {renderRoundResults()}
-      {renderFinalScores()}
     </div>
   )
 }
