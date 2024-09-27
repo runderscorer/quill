@@ -1,6 +1,7 @@
 import { useOutletContext } from "react-router-dom"
 import ResponseForm from "./ResponseForm"
 import Responses from "./Responses"
+import RoundResults from "./RoundResults"
 import Scoreboard from "./Scoreboard"
 
 function GameScreen() {
@@ -11,7 +12,8 @@ function GameScreen() {
     players, 
     room_code: roomCode,
     round, 
-    status 
+    status,
+    max_rounds: maxRounds 
   } = gameInfo
   const { responses } = currentPrompt
 
@@ -23,13 +25,19 @@ function GameScreen() {
     status === 'gathering_votes' && <Responses responses={responses.data} />
   )
 
-  const renderScoreboard = () => (
+  const renderRoundResults = () => (
     status === 'viewing_scores' && 
-      <Scoreboard 
-        roomCode={roomCode}
+      <RoundResults 
+        finalRound={round === maxRounds}
         player={player}
         responses={responses.data} 
+        roomCode={roomCode}
       />
+  )
+
+  const renderFinalScores = () => (
+    status === 'game_over' &&
+      <Scoreboard />
   )
 
   return (
@@ -54,7 +62,8 @@ function GameScreen() {
       </div>
       {renderResponses()}
       {renderResponseForm()}
-      {renderScoreboard()}
+      {renderRoundResults()}
+      {renderFinalScores()}
     </div>
   )
 }
