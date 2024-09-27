@@ -5,8 +5,14 @@ import Scoreboard from "./Scoreboard"
 
 function GameScreen() {
   const context = useOutletContext()
-  const { gameInfo } = context
-  const { current_prompt: currentPrompt, players, round, status } = gameInfo
+  const { gameInfo, player } = context
+  const { 
+    current_prompt: currentPrompt, 
+    players, 
+    room_code: roomCode,
+    round, 
+    status 
+  } = gameInfo
   const { responses } = currentPrompt
 
   const renderResponseForm = () => (
@@ -20,7 +26,8 @@ function GameScreen() {
   const renderScoreboard = () => (
     status === 'viewing_scores' && 
       <Scoreboard 
-        players={players.data}
+        roomCode={roomCode}
+        player={player}
         responses={responses.data} 
       />
   )

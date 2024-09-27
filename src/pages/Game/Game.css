@@ -130,3 +130,20 @@
     }
   }
 }
+
+.next-round {
+  display: flex;
+
+  button {
+    padding: 20px;
+    width: 100%;
+  }
+
+  &:first-of-type {
+    margin-bottom: 20px;
+  }
+
+  &:last-of-type {
+    margin-top: 20px;
+  }
+}

@@ -1,6 +1,10 @@
-import { useOutletContext } from "react-router-dom"
+import API from "../../helpers/API"
 
-function Scoreboard({ responses }) {
+function Scoreboard({ 
+  player,
+  roomCode,
+  responses
+}) {
   const displayVoterNames = (votes) => (
     votes.map(vote => vote.attributes.player_name).join(', ')
   )
@@ -27,8 +31,29 @@ function Scoreboard({ responses }) {
     }
   }
 
+  const handleClick = () => {
+    API.nextRound(roomCode, player.id)
+      .then(response => {
+        console.log('response: ', response)
+      })
+      .catch(error => {
+        console.error('error: ', error)
+      })
+  }
+
+  const renderNextRoundButton = () => (
+    player && player.host && (
+      <div className='next-round'>
+        <button onClick={handleClick}>
+          Art thou ready for the next round?
+        </button>
+      </div>
+    )
+  )
+
   return (
     <div className='scoreboard'>
+      {renderNextRoundButton()}
       {
         responses.map(response => 
           <div>
@@ -54,6 +79,7 @@ function Scoreboard({ responses }) {
           </div>
         )
       }
+      {renderNextRoundButton()}
     </div>
   )
 }
