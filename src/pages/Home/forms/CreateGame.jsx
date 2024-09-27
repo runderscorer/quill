@@ -7,7 +7,7 @@ function CreateGame({ handleGoBack, setErrorMessage }) {
   const navigate = useNavigate()
   const context = useOutletContext()
   const { 
-    gameSubscription, 
+    gameChannel,
     gameInfo,
     handleSetGameInfo, 
     addPlayer 
@@ -47,14 +47,11 @@ function CreateGame({ handleGoBack, setErrorMessage }) {
     API.createGame(playerName, roomCode)
       .then(response => {
         const game = response.data.data.attributes
-        console.log('setting gameInfo for: ', game)
         handleSetGameInfo(game)
-        console.log('gameInfo is set: ', gameInfo)
         addPlayer(game.host)
         navigate(`/games/${roomCode}`)
       })
       .catch(error => {
-        console.log("CREATE GAME ERROR: ", error)
         setErrorMessage(error.response.data.errors)
       })
   }

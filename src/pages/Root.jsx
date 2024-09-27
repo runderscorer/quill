@@ -7,25 +7,21 @@ const Root = () => {
   const navigate = useNavigate()
 
   const getPlayer = () => {
-    console.log('in getPlayer')
     return JSON.parse(sessionStorage.getItem('player')) || null
   }
 
   const getGame = () => {
-    console.log('in getGame')
     return JSON.parse(sessionStorage.getItem('game')) || null
   } 
 
   const [player, setPlayer] = useState(getPlayer)
   const [gameInfo, setGameInfo] = useState(getGame)
-  const [gameSubscription, setGameSubscription] = useState(null)
+  const [gameChannel, setGameChannel] = useState(null)
   const [isHost, setIsHost] = useState(false)
 
-  const addPlayer = (player) => {
-    console.log('Add player', player)
-    setPlayer(player)
-    console.log('gameSubscription: ', gameSubscription)
-    sessionStorage.setItem('player', JSON.stringify(player))
+  const addPlayer = (newPlayer) => {
+    setPlayer(newPlayer)
+    sessionStorage.setItem('player', JSON.stringify(newPlayer))
   }
 
   const removePlayer = () => {
@@ -41,12 +37,12 @@ const Root = () => {
 
   const createGameSubscription = () => {
     const cable = ActionCable.createConsumer(`${import.meta.env.VITE_BACKEND_WS_URL}/cable`)
-    const gameChannel = cable.subscriptions.create({ channel: 'GameChannel', room_code: gameInfo.room_code }, {
+    const gameSubscription = cable.subscriptions.create({ channel: 'GameChannel', room_code: gameInfo.room_code }, {
       connected: () => {
         console.log('connected')
+        gameSubscription.setPlayerId(player.id)
       },
       received: (data) => {
-        console.log('received: ', data)
         handleSetGameInfo(data.game.data.attributes)
         data.type === 'GAME_STARTED' && navigate(`/games/${gameInfo.room_code}/play`)
       },
@@ -54,28 +50,23 @@ const Root = () => {
         console.log('disconnected')
       },
       setPlayerId: (playerId) => {
-        gameChannel.perform('set_player_id', { player_id: playerId })
+        gameSubscription.perform('set_player_id', { player_id: playerId })
       }
     })
 
-    console.log('gameChannel: ', gameChannel)
-
-    setGameSubscription(gameChannel)
+    setGameChannel(gameSubscription)
 
     return () => {
-      gameChannel.unsubscribe()
+      gameSubscription.unsubscribe()
     }
   }
 
   const handleSetIsHost = () => {
-    console.log('in handleSetIsHost...')
-    console.log('in handleSetIsHost player', player)
-    console.log('in handleSetIsHost gameInfo', gameInfo)
     player && gameInfo && setIsHost(player.id === gameInfo.host.id)    
   }
 
   useEffect(() => {
-    if (gameInfo && !gameSubscription) {
+    if (gameInfo && !gameChannel) {
       createGameSubscription()
     }
   })
@@ -88,7 +79,7 @@ const Root = () => {
       handleSetGameInfo,
       handleSetIsHost,
       gameInfo,
-      gameSubscription,
+      gameChannel,
       isHost
     }}/>
   )
