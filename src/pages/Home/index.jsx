@@ -47,7 +47,7 @@ function Home() {
 
   const renderButtons = () => {
     return (
-      <div className="flex-col flex-center">
+      <div className="actions">
         <button className="mb10" type="button" onClick={() => setAction('find')}>
           Find Game
         </button>

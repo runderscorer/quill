@@ -13,12 +13,11 @@ function Lobby() {
     addPlayer,
     removePlayer,
     player,
-    handleSetIsHost,
     handleSetGameInfo,
     gameInfo,
-    isHost,
     navigate
   } = context
+  const { players } = gameInfo
 
   const [
     playerName,
@@ -30,10 +29,6 @@ function Lobby() {
       Helper.findGame(params.roomCode, handleSetGameInfo)
     }
   }, [])
-
-  useEffect(() => {
-    handleSetIsHost()
-  }, [gameInfo, player])
 
   useEffect(() => {
     if (gameInfo) {
@@ -99,49 +94,77 @@ function Lobby() {
   const renderStartGame = () => {
     const { started_at: startedAt } = gameInfo
 
-    return isHost && !startedAt && (
-      <div>
+    // return player && player.host && !startedAt && (
+
+    if (player && player.host && !startedAt) {
+      return (
         <button type="button" onClick={handleStartGameClick}>
           Start Game
         </button>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <span>
+          Waiting for host to start game...
+        </span>
+      )
+    }
   }
 
-  const renderPlayerWaiting = () => (
-    <div>
-      <p>Waiting for {gameInfo.host.name} to start the game...</p>
-      <p>{player.name} is ready</p>
-
-      {renderStartGame()}
+  const renderButtons = () => (
+    <div className='actions'>
+      <div className='left'>
+        {renderStartGame()}
+      </div>
     
-      <button type="button" onClick={handleLeaveGame}>
+      <button 
+        className='secondary-btn'
+        type="button" 
+        onClick={handleLeaveGame}
+      >
         Leave Game
       </button>
     </div>
   ) 
 
-  const renderPlayerCount= () => (
-    gameInfo.player_names ? gameInfo.player_names.length : 0
-  )
-
   return gameInfo && (
-    <div className='game'>
-      <div>
-        <p>Room Code: {gameInfo.room_code}</p>
+    <div className='lobby'>
+      <div className='welcome'>
+        <p className='top'>
+          Gather, ye who speak in song,
+        </p>
+        <p className='bottom'>
+          &nbsp;to the court of&nbsp;
+          <span className='bold uppercase'>
+            {gameInfo.room_code} 
+          </span>
+        </p>
       </div>
 
-      <div>
-        <p>Players Waiting ({renderPlayerCount()})</p>
-        <ul>
-          {gameInfo.player_names && gameInfo.player_names.map((player_name, index) => (
-            <li key={index}>{player_name}</li>
-          ))}
-        </ul>
+      <div className='players'>
+        {
+          players && players.data.map(player => (
+            <div 
+              className='player'
+              key={player.id}
+            >
+              <div className='quill'/>
+              <div className='dots' />
+              <div className='name'>
+                {player.attributes.name}
+                {
+                  player.attributes.host && (
+                    <span />
+                  )
+                }
+              </div>
+            </div>
+          ))
+        }
       </div>
 
       {!player && renderPlayerNameForm()}
-      {player && renderPlayerWaiting()}
+      {player && renderButtons()}
     </div>
   )
 }

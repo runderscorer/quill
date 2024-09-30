@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import ActionCable from 'actioncable'
-import API from '../helpers/API'
 
 const Root = () => {
   const navigate = useNavigate()
@@ -61,10 +60,6 @@ const Root = () => {
     }
   }
 
-  const handleSetIsHost = () => {
-    player && gameInfo && setIsHost(player.id === gameInfo.host.id)    
-  }
-
   useEffect(() => {
     if (gameInfo && !gameChannel) {
       createGameSubscription()
@@ -78,10 +73,8 @@ const Root = () => {
       removePlayer,
       player,
       handleSetGameInfo,
-      handleSetIsHost,
       gameInfo,
-      gameChannel,
-      isHost
+      gameChannel
     }}/>
   )
 }
