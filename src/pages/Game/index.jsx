@@ -17,9 +17,9 @@ function Game() {
   }, [])
 
   return (
-    <div>
-      {gameInfo ? <GameScreen /> : <Loading />}
-    </div>
+    <Loading ready={!!gameInfo}>
+      <GameScreen />
+    </Loading>
   )
 }
 
