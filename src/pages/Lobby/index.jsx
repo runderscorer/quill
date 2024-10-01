@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useOutletContext } from 'react-router-dom'
 import './Lobby.css'
 import API from '../../helpers/API'
+import CopyGenerator from '../../helpers/CopyGenerator'
 import Helper from '../../helpers/Helper'
 
 function Lobby() {
@@ -78,23 +79,23 @@ function Lobby() {
 
   const renderPlayerNameForm = () => (
     <form onSubmit={handleSubmit}>
-      <p>Enter your name to join</p>
+      <p className='bold'>
+        Scribe your name to begin, o {CopyGenerator.playerNameLabel()}
+      </p>
       <input
         type="text"
         onChange={handleChange}
-        placeholder="Enter Your Name"
+        placeholder="Enter your name"
         value={playerName}
       />
       <button type="submit">
-        Enter Name
+        Join Game 
       </button>
     </form>
   ) 
 
   const renderStartGame = () => {
     const { started_at: startedAt } = gameInfo
-
-    // return player && player.host && !startedAt && (
 
     if (player && player.host && !startedAt) {
       return (

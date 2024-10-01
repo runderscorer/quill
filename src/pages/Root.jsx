@@ -39,7 +39,9 @@ const Root = () => {
     const gameSubscription = cable.subscriptions.create({ channel: 'GameChannel', room_code: gameInfo.room_code }, {
       connected: () => {
         console.log('connected')
-        gameSubscription.setPlayerId(player.id)
+        if (player) {
+          gameSubscription.setPlayerId(player.id)
+        }
       },
       received: (data) => {
         handleSetGameInfo(data.game.data.attributes)

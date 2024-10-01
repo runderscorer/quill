@@ -32,4 +32,15 @@ export default class CopyGenerator {
 
     return copy[Math.floor(Math.random() * copy.length)]
   }
+
+  static playerNameLabel = () => {
+    const copy = [
+      'lyrical odist.',
+      'evocative bard.',
+      'visionary poet.',
+      'masterful lyricist.'
+    ]
+
+    return copy[Math.floor(Math.random() * copy.length)]
+  }
 }

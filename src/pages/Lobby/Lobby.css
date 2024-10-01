@@ -6,6 +6,12 @@
     input {
       text-transform: uppercase;
       text-align: center;
+      height: 20px;
+    }
+
+    button {
+      margin-top: 20px;
+      margin-left: auto;
     }
   }
 
