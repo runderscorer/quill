@@ -1,13 +1,23 @@
 import { useOutletContext } from "react-router-dom"
 import Loading from "../../components/Loading"
+import API from "../../helpers/API"
 import './GameOver.css'
 
 function GameOver() {
   const context = useOutletContext()
-  const { gameInfo } = context
+  const { gameInfo, player } = context
 
   const renderGameOver = () => {
     const { winners, not_winners: notWinners } = gameInfo
+
+    const handleClick = () => {
+      API.restartGame(
+        gameInfo.room_code, 
+        player.id
+      ).then(response => {
+        console.log(response)
+      })
+    }
 
     return (
       <div className='game-over'>
@@ -21,7 +31,7 @@ function GameOver() {
         </div>
         <div className='winners'>
           {
-            winners.map(winner => (
+            winners && winners.map(winner => (
               <div 
                 className='player'
                 key={winner.id}
@@ -44,7 +54,7 @@ function GameOver() {
         </div>
         <div className='players'>
           {
-            notWinners.map(player => (
+            notWinners && notWinners.map(player => (
               <div 
                 className='player'
                 key={player.id}
@@ -65,6 +75,19 @@ function GameOver() {
             ))
           }
         </div>
+
+        {
+          player.host && 
+          <div className='actions'>
+            <button 
+              className='primary-btn'
+              type='button'
+              onClick={handleClick}
+            >
+              Play Again? 
+            </button>
+          </div>
+        }
       </div>
     )
   }

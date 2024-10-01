@@ -20,12 +20,16 @@
       color: mediumseagreen
     }
 
-    .player:before {
-      position: absolute;
-      content: '👑';
-      font-size: 20px;
-      top: 5px;
-      left: -25px;
+    .player {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        content: '👑';
+        font-size: 20px;
+        top: 5px;
+        left: -25px;
+      }
     }
   }
 
@@ -56,5 +60,10 @@
         text-transform: uppercase;
       }
     }
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end;
   }
 }

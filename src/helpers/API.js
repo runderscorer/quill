@@ -54,4 +54,8 @@ export default class API {
   static nextRound = (roomCode, playerId) => {
     return axios.patch(`${import.meta.env.VITE_BACKEND_URL}/games/${roomCode}/next_round`, { player_id: playerId })
   }
+
+  static restartGame = (roomCode, playerId) => {
+    return axios.patch(`${import.meta.env.VITE_BACKEND_URL}/games/${roomCode}/restart`, { player_id: playerId })
+  }
 }
