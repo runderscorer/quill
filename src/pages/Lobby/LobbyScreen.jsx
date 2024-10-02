@@ -26,6 +26,11 @@ function LobbyScreen() {
     setPlayerName
   ] = useState('')
 
+  const [
+    playerNameLabel,
+    setPlayerNameLabel
+  ] = useState('')
+
   useEffect(() => {
     if (!gameInfo) {
       Helper.findGame(params.roomCode, handleSetGameInfo)
@@ -44,6 +49,10 @@ function LobbyScreen() {
       }
     }
   }, [gameInfo])
+
+  useEffect(() => {
+    setPlayerNameLabel(CopyGenerator.playerNameLabel())
+  }, [])
   
   const handleChange = (e) => {
     setPlayerName(e.target.value)
@@ -81,7 +90,7 @@ function LobbyScreen() {
   const renderPlayerNameForm = () => (
     <form onSubmit={handleSubmit}>
       <p className='bold'>
-        Scribe your name to begin, o {CopyGenerator.playerNameLabel()}
+        Scribe your name to begin, o {playerNameLabel}
       </p>
       <input
         type="text"
