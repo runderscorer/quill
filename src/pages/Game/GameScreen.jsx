@@ -51,7 +51,7 @@ function GameScreen() {
             {`Round ${round}`}
           </p>
           <p>
-            {`by ${currentPrompt.author}`}
+            {`"${currentPrompt.title}" by ${currentPrompt.author}`}
           </p>
         </div>
         <div>
