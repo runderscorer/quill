@@ -28,6 +28,17 @@
       width: 100%;
     }
   }
+
+  h1 {
+    span {
+      font-size: 12px;
+      vertical-align: middle;
+      border-top: 1px solid antiquewhite;
+      border-bottom: 1px solid antiquewhite;
+      padding: 3px 0;
+      text-transform: uppercase;
+    }
+  }
 }
 
 button {

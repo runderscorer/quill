@@ -86,7 +86,13 @@ function Home() {
   return (
     <div className="start">
       <div>
-        <h1 className="mb40">Prose & Cons</h1>
+        <h1>
+          Prose&nbsp;
+          <span>
+            and
+          </span> 
+          &nbsp;Cons
+        </h1>
         <p className="error">
           {errorMessage}
         </p>
