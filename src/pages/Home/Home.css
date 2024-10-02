@@ -1,12 +1,10 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 10px;
   text-align: center;
 }
 
 .start {
-  padding: 40px;
   border-radius: 10px;
 
   .error {
@@ -42,7 +40,8 @@
 }
 
 button {
-  width: 150px;
+  min-height: 60px;
+  width: 100%;
 }
 
 .secondary-btn {
@@ -52,10 +51,14 @@ button {
 
 .actions {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   margin-top: 20px;
   width: 100%;
+
+  button:first-of-type {
+    margin-bottom: 10px;
+  }
 }
 
 @keyframes logo-spin {
@@ -70,5 +73,25 @@ button {
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
+  }
+}
+
+@media (min-width: 768px) {
+  #root {
+    padding: 0;
+    max-width: 1280px;
+  }
+
+  .start {
+    padding: 40px;
+  }
+
+  button {
+    width: 150px;
+    min-height: 40px;
+  }
+
+  .actions {
+    flex-direction: row;
   }
 }

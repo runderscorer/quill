@@ -1,6 +1,5 @@
 .game-over {
   border-radius: 10px;
-  padding: 40px;
   width: 100%;
 
   .header {
@@ -65,5 +64,11 @@
   .actions {
     display: flex;
     justify-content: flex-end;
+  }
+}
+
+@media (min-width: 768px) {
+  .game-over {
+    padding: 40px;
   }
 }

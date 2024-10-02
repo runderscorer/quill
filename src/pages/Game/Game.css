@@ -24,10 +24,6 @@
 }
 
 .response-form {
-  p {
-    text-align: left;
-  }
-
   form {
     display: flex;
     flex-direction: column;
@@ -45,10 +41,6 @@
 
 .responses-container {
   margin-bottom: 50px;
-
-  p {
-    text-align: left;
-  }
 }
 
 .response-container {
