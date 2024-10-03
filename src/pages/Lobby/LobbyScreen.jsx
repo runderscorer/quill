@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, useOutletContext } from 'react-router-dom'
 import './Lobby.css'
+import SignUp from '../../components/SignUp'
 import API from '../../helpers/API'
-import CopyGenerator from '../../helpers/CopyGenerator'
 import Helper from '../../helpers/Helper'
 
 
@@ -12,7 +12,6 @@ function LobbyScreen() {
   const context = useOutletContext()
 
   const { 
-    addPlayer,
     removePlayer,
     player,
     handleSetGameInfo,
@@ -22,15 +21,10 @@ function LobbyScreen() {
   const { players } = gameInfo
 
   const [
-    playerName,
-    setPlayerName
-  ] = useState('')
-
-  const [
-    playerNameLabel,
-    setPlayerNameLabel
-  ] = useState('')
-
+    errorMessage,
+    setErrorMessage
+  ] = useState(null)
+    
   useEffect(() => {
     if (!gameInfo) {
       Helper.findGame(params.roomCode, handleSetGameInfo)
@@ -50,25 +44,6 @@ function LobbyScreen() {
     }
   }, [gameInfo])
 
-  useEffect(() => {
-    setPlayerNameLabel(CopyGenerator.playerNameLabel())
-  }, [])
-  
-  const handleChange = (e) => {
-    setPlayerName(e.target.value)
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    API.createPlayer(playerName, gameInfo.room_code)
-      .then(response => {
-        addPlayer(response.data.data.attributes)
-      })
-      .catch(error => {
-        console.error(error)
-      })
-  }
-
   const handleLeaveGame = () => {
     API.leaveGame(player.id)
       .then(response => {
@@ -83,26 +58,9 @@ function LobbyScreen() {
         console.log('response: ', response)
       })
       .catch(error => {
-        console.error('error: ', error)
+        setErrorMessage(error.response.data.error_message)
       })
   }
-
-  const renderPlayerNameForm = () => (
-    <form onSubmit={handleSubmit}>
-      <p className='bold'>
-        Scribe your name to begin, o {playerNameLabel}
-      </p>
-      <input
-        type="text"
-        onChange={handleChange}
-        placeholder="Enter your name"
-        value={playerName}
-      />
-      <button type="submit">
-        Join Game 
-      </button>
-    </form>
-  ) 
 
   const renderStartGame = () => {
     const { started_at: startedAt } = gameInfo
@@ -123,18 +81,23 @@ function LobbyScreen() {
   }
 
   const renderButtons = () => (
-    <div className='actions'>
-      <div className='left'>
-        {renderStartGame()}
+    <div>
+      <p className='error'>
+        {errorMessage}
+      </p>
+      <div className='actions'>
+        <div className='left'>
+          {renderStartGame()}
+        </div>
+      
+        <button 
+          className='secondary-btn'
+          type="button" 
+          onClick={handleLeaveGame}
+        >
+          Leave Game
+        </button>
       </div>
-    
-      <button 
-        className='secondary-btn'
-        type="button" 
-        onClick={handleLeaveGame}
-      >
-        Leave Game
-      </button>
     </div>
   ) 
 
@@ -174,7 +137,7 @@ function LobbyScreen() {
         }
       </div>
 
-      {!player && renderPlayerNameForm()}
+      {!player && <SignUp />}
       {player && renderButtons()}
     </div>
   )

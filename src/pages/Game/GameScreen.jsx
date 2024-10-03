@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom"
 import ResponseForm from "./ResponseForm"
 import Responses from "./Responses"
 import RoundResults from "./RoundResults"
+import SignUp from "../../components/SignUp"
 
 function GameScreen() {
   const context = useOutletContext()
@@ -25,12 +26,16 @@ function GameScreen() {
     }
   }, [gameInfo])
 
+  const renderPlayerNameForm = () => (
+    status !== 'waiting' && !player && <SignUp />
+  )
+
   const renderResponseForm = () => (
-    status === 'gathering_responses' && <ResponseForm />
+    status === 'gathering_responses' && player && <ResponseForm />
   )
 
   const renderResponses = () => (
-    status === 'gathering_votes' && <Responses responses={responses.data} />
+    status === 'gathering_votes' && player && <Responses responses={responses.data} />
   )
 
   const renderRoundResults = () => (
@@ -45,24 +50,29 @@ function GameScreen() {
 
   return (
     <div>
-      <div className='game'>
-        <div className='underline'>
-          <p className='bold'>
-            {`Round ${round}`}
-          </p>
-          <p>
-            {`"${currentPrompt.title}" by ${currentPrompt.author}`}
-          </p>
-        </div>
-        <div>
-          <p className='italic'>
-            {currentPrompt.text}
-          </p>
-          <p>
-            ...
-          </p>
-        </div>
-      </div>
+      {
+        player && (
+          <div className='game'>
+            <div className='underline'>
+              <p className='bold'>
+                {`Round ${round}`}
+              </p>
+              <p>
+                {`"${currentPrompt.title}" by ${currentPrompt.author}`}
+              </p>
+            </div>
+            <div>
+              <p className='italic'>
+                {currentPrompt.text}
+              </p>
+              <p>
+                ...
+              </p>
+            </div>
+          </div>
+        )
+      }
+      {renderPlayerNameForm()}
       {renderResponses()}
       {renderResponseForm()}
       {renderRoundResults()}

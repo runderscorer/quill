@@ -143,3 +143,9 @@
     margin-top: 20px;
   }
 }
+
+@media (min-width: 768px) {
+  .response p {
+    text-align: center;
+  }
+}

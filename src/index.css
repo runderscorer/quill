@@ -82,6 +82,14 @@ p {
   text-align: center;
 }
 
+.error {
+  font-size: 14px;
+  color: #ff474c;
+  height: 24px;
+  margin: 0;
+  text-align: center;
+}
+
 @media (min-width: 768px) {
   p { 
     text-align: left;

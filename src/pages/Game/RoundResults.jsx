@@ -57,7 +57,7 @@ function RoundResults({
       {renderNextRoundButton()}
       {
         responses.map(response => 
-          <div>
+          <div key={response.id}>
             <div className={`response ${response.attributes.correct ? 'correct' : ''}`}>
               <p>
                 {response.attributes.text}

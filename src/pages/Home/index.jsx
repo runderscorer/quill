@@ -48,10 +48,10 @@ function Home() {
   const renderButtons = () => {
     return (
       <div className="actions">
-        <button className="mb10" type="button" onClick={() => setAction('find')}>
+        <button type="button" onClick={() => setAction('find')}>
           Find Game
         </button>
-        <button className="mb10" type="button" onClick={() => setAction('create')}>
+        <button type="button" onClick={() => setAction('create')}>
           Create Game
         </button>
       </div>
