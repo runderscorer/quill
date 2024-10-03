@@ -97,7 +97,10 @@ function GameOver() {
               Play Again? 
             </button>
           )}
-          <button onClick={handleLeaveGame}>
+          <button 
+            className="secondary-btn"
+            onClick={handleLeaveGame}
+          >
             Leave Game
           </button>
         </div>

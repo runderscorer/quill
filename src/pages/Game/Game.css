@@ -31,11 +31,6 @@
     input {
       height: 20px;
     }
-
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-    }
   }
 }
 

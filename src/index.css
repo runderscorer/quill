@@ -94,6 +94,15 @@ p {
   p { 
     text-align: left;
   }
+
+  .actions {
+    flex-direction: row-reverse;
+
+    button:first-of-type {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+  }
 }
 
 @media (prefers-color-scheme: light) {
