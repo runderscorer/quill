@@ -2,9 +2,9 @@ import { useOutletContext } from "react-router-dom"
 import { useEffect, useState } from "react"
 import API from "../helpers/API"
 import CopyGenerator from "../helpers/CopyGenerator"
-import './SignUp.css'
+import './JoinGame.css'
 
-function SignUp() {
+function JoinGame() {
   const context = useOutletContext()
   const {
     addPlayer,
@@ -21,6 +21,11 @@ function SignUp() {
     setPlayerName
   ] = useState('')
 
+  const [
+    errorMessage,
+    setErrorMessage
+  ] = useState(null)
+
   useEffect(() => {
     setPlayerNameLabel(CopyGenerator.playerNameLabel())
   }, [])
@@ -36,12 +41,15 @@ function SignUp() {
         addPlayer(response.data.data.attributes)
       })
       .catch(error => {
-        console.error(error)
+        setErrorMessage(error.response.data.error[0])
       })
   }
 
   return (
     <div className='signup'>
+      <p className='error'>
+        {errorMessage}
+      </p>
       <form onSubmit={handleSubmit}>
         <p className='bold'>
           Scribe your name to begin, o {playerNameLabel}
@@ -60,4 +68,4 @@ function SignUp() {
   )
 }
 
-export default SignUp;
+export default JoinGame;

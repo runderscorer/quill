@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router-dom"
 import ResponseForm from "./ResponseForm"
 import Responses from "./Responses"
 import RoundResults from "./RoundResults"
-import SignUp from "../../components/SignUp"
+import JoinGame from "../../components/JoinGame"
 
 function GameScreen() {
   const context = useOutletContext()
@@ -27,7 +27,7 @@ function GameScreen() {
   }, [gameInfo])
 
   const renderPlayerNameForm = () => (
-    status !== 'waiting' && !player && <SignUp />
+    status !== 'waiting' && !player && <JoinGame />
   )
 
   const renderResponseForm = () => (

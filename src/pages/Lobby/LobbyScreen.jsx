@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useOutletContext } from 'react-router-dom'
 import './Lobby.css'
-import SignUp from '../../components/SignUp'
+import JoinGame from '../../components/JoinGame'
 import API from '../../helpers/API'
 import Helper from '../../helpers/Helper'
 
@@ -137,7 +137,7 @@ function LobbyScreen() {
         }
       </div>
 
-      {!player && <SignUp />}
+      {!player && <JoinGame />}
       {player && renderButtons()}
     </div>
   )
