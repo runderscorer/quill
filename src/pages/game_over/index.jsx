@@ -5,7 +5,11 @@ import './GameOver.css'
 
 function GameOver() {
   const context = useOutletContext()
-  const { gameInfo, player } = context
+  const { 
+    gameInfo, 
+    player,
+    navigate 
+  } = context
 
   const renderGameOver = () => {
     const { winners, not_winners: notWinners } = gameInfo
@@ -16,6 +20,13 @@ function GameOver() {
         player.id
       ).then(response => {
         console.log(response)
+      })
+    }
+
+    const handleLeaveGame = () => {
+      API.leaveGame(player.id).then(response => {
+        console.log(response)
+        navigate('/')
       })
     }
 
@@ -76,9 +87,8 @@ function GameOver() {
           }
         </div>
 
-        {
-          player.host && 
-          <div className='actions'>
+        <div className='actions'>
+          {player && player.host && (
             <button 
               className='primary-btn'
               type='button'
@@ -86,8 +96,11 @@ function GameOver() {
             >
               Play Again? 
             </button>
-          </div>
-        }
+          )}
+          <button onClick={handleLeaveGame}>
+            Leave Game
+          </button>
+        </div>
       </div>
     )
   }

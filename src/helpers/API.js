@@ -58,4 +58,8 @@ export default class API {
   static restartGame = (roomCode, playerId) => {
     return axios.patch(`${import.meta.env.VITE_BACKEND_URL}/games/${roomCode}/restart`, { player_id: playerId })
   }
+
+  static leaveGame = (playerId) => {
+    return axios.delete(`${import.meta.env.VITE_BACKEND_URL}/players/${playerId}`)
+  }
 }
