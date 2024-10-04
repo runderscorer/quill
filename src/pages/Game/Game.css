@@ -53,6 +53,12 @@
       background: mediumseagreen;
       color: #242424;
     }
+
+    &.own {
+      background: dodgerblue;
+      color: #242424;
+      margin-bottom: 40px;
+    }
   }
 }
 

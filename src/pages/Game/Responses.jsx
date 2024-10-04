@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import Response from './Response'
 import CopyGenerator from '../../helpers/CopyGenerator'
+import PlayerResponse from './PlayerResponse'
 
 function Responses({ responses }) {
   const context = useOutletContext()
@@ -17,10 +18,10 @@ function Responses({ responses }) {
     setVotedResponseId
   ] = useState(null)
 
-  const excludePlayerResponse = () => {
-    return responses.filter(response => response.attributes.player_id !== playerId)
-  }
+  const playerResponse = responses.find(response => response.attributes.player_id === playerId)
 
+  const excludePlayerResponse = () => responses.filter(response => response.attributes.player_id !== playerId)
+  
   const getVotedResponseId = () => {
     const votedId = votes.data.find(vote => vote.attributes.player_id === playerId)
     const responseId = votedId && votedId.attributes.response_id
@@ -42,18 +43,31 @@ function Responses({ responses }) {
 
   return (
     <div className='responses-container'>
-      <p>
-        {renderResponsesHeader()}
-      </p>
       <div>
-        {excludePlayerResponse().map(response =>
-          <Response 
-            disabled={!!votedResponseId}
-            key={`response-${response.id}`}
-            response={response.attributes} 
-            votedResponseId={votedResponseId}
-          />
-        )}
+        {
+          playerResponse && 
+          <div>
+            <p>
+              You wrote:
+            </p>
+            <PlayerResponse response={playerResponse.attributes} />
+          </div>
+        }
+      </div>
+      <div>
+        <p>
+          {renderResponsesHeader()}
+        </p>
+        <div>
+          {excludePlayerResponse().map(response =>
+            <Response 
+              disabled={!!votedResponseId}
+              key={`response-${response.id}`}
+              response={response.attributes} 
+              votedResponseId={votedResponseId}
+            />
+          )}
+        </div>
       </div>
     </div>
   )
