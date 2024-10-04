@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useOutletContext } from "react-router-dom"
 import Loading from "../../components/Loading"
 import API from "../../helpers/API"
@@ -11,6 +12,11 @@ function GameOver() {
     navigate 
   } = context
 
+  const [
+    errorMessage,
+    setErrorMessage
+  ] = useState(null)
+
   const renderGameOver = () => {
     const { winners, not_winners: notWinners } = gameInfo
 
@@ -20,6 +26,8 @@ function GameOver() {
         player.id
       ).then(response => {
         console.log(response)
+      }).catch(error => {
+        setErrorMessage(error.response.data.error_message)
       })
     }
 
@@ -87,6 +95,9 @@ function GameOver() {
           }
         </div>
 
+        <p className='error'>
+          {errorMessage}
+        </p>
         <div className='actions'>
           {player && player.host && (
             <button 
