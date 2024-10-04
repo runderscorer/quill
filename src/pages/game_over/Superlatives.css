@@ -1,0 +1,55 @@
+.superlatives {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid antiquewhite;
+
+  .container {
+    color: antiquewhite;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      margin: 4px 0;
+    }
+
+    p.name {
+      font-size: 30px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: dodgerblue;
+    }
+    
+    > .title {
+      font-size: 20px;
+      font-weight: bold;
+      font-style: italic;
+    }
+
+    span {
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      span:first-of-type {
+        font-size: 30px;
+      }
+
+      p:first-of-type {
+        font-size: 11px;
+      }
+    }
+  }
+}

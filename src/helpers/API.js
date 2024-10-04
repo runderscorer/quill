@@ -62,4 +62,14 @@ export default class API {
   static leaveGame = (playerId) => {
     return axios.delete(`${import.meta.env.VITE_BACKEND_URL}/players/${playerId}`)
   }
+
+  static submitReaction = (responseId, kind, playerId) => {
+    return axios.post(`${import.meta.env.VITE_BACKEND_URL}/reactions`, {
+      reaction: {
+        response_id: responseId,
+        kind: kind,
+        player_id: playerId
+      }
+    })
+  }
 }

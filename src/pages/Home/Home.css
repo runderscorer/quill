@@ -15,7 +15,7 @@
   }
 
   form {
-    height: 200px;
+    height: auto;
 
     input { 
       font-size: 16px;

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useOutletContext } from "react-router-dom"
 import Loading from "../../components/Loading"
+import Superlatives from './Superlatives'
 import API from "../../helpers/API"
 import './GameOver.css'
 
@@ -18,7 +19,13 @@ function GameOver() {
   ] = useState(null)
 
   const renderGameOver = () => {
-    const { winners, not_winners: notWinners } = gameInfo
+    const { 
+      winners, 
+      not_winners: notWinners,
+      most_liked: mostLiked,
+      funniest,
+      smartest
+    } = gameInfo
 
     const handleClick = () => {
       API.restartGame(
@@ -48,52 +55,63 @@ function GameOver() {
             The final tally of triumphs and trials!
           </span>
         </div>
-        <div className='winners'>
-          {
-            winners && winners.map(winner => (
-              <div 
-                className='player'
-                key={winner.id}
-              >
-                <div className='name'>
-                  <span>
-                    {winner.name}
-                  </span>
+        <div className='winners-and-players'>
+          <div className='winners'>
+            {
+              winners && winners.map(winner => (
+                <div 
+                  className='player'
+                  key={winner.id}
+                >
+                  <div className='name'>
+                    <span>
+                      {winner.name}
+                    </span>
+                  </div>
+                  <div className='dots' />
+                  <div className='score'>
+                    {`${winner.score}`}
+                    <span>
+                      points
+                    </span>
+                  </div>
                 </div>
-                <div className='dots' />
-                <div className='score'>
-                  {`${winner.score}`}
-                  <span>
-                    points
-                  </span>
+              ))
+            }
+          </div>
+          <div className='players'>
+            {
+              notWinners && notWinners.map(player => (
+                <div 
+                  className='player'
+                  key={player.id}
+                >
+                  <div className='name'>
+                    <span>
+                      {player.name}
+                    </span>
+                  </div>
+                  <div className='dots' />
+                  <div className='score'>
+                    {`${player.score}`}
+                    <span>
+                      points
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))
-          }
+              ))
+            }
+          </div>
         </div>
-        <div className='players'>
-          {
-            notWinners && notWinners.map(player => (
-              <div 
-                className='player'
-                key={player.id}
-              >
-                <div className='name'>
-                  <span>
-                    {player.name}
-                  </span>
-                </div>
-                <div className='dots' />
-                <div className='score'>
-                  {`${player.score}`}
-                  <span>
-                    points
-                  </span>
-                </div>
-              </div>
-            ))
-          }
-        </div>
+
+        {
+          (mostLiked || funniest || smartest) && 
+            <Superlatives
+              mostLiked={mostLiked}
+              funniest={funniest}
+              smartest={smartest}
+            />
+        }
 
         <p className='error'>
           {errorMessage}

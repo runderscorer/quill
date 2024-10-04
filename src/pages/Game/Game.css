@@ -29,7 +29,7 @@
     flex-direction: column;
 
     input {
-      height: 20px;
+      height: 40px;
     }
   }
 }
@@ -45,7 +45,7 @@
     width: 100%;
 
     &.voted {
-      background: antiquewhite;
+      background: dodgerblue;
       color:#242424
     }
 
@@ -55,9 +55,13 @@
     }
 
     &.own {
-      background: dodgerblue;
+      background: antiquewhite;
       color: #242424;
       margin-bottom: 40px;
+
+      &:hover {
+        cursor: initial;
+      }
     }
   }
 }

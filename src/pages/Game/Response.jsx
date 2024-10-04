@@ -1,5 +1,6 @@
 import API from "../../helpers/API"
 import { useOutletContext } from "react-router-dom"
+import Reactions from "./Reactions"
 
 function Response({ response, disabled, votedResponseId }) {
   const context = useOutletContext()
@@ -29,6 +30,10 @@ function Response({ response, disabled, votedResponseId }) {
       >
         {response.text}
       </button>
+      <Reactions 
+        playerId={player.id}
+        responseId={response.id} 
+      />
     </div>
   )
 }
