@@ -65,14 +65,24 @@ function RoundResults({
             </div>
             <div className='results'>
               <div className='details'>
-                <span>
-                  {`Author: ${response.attributes.player_name}`}
-                </span>
+                <div>
+                  <span>
+                    Author:&nbsp;
+                  </span>
+                  <span className='author'>
+                    {response.attributes.player_name}
+                  </span>
+                </div>
                 {
                   response.attributes.votes.data.length > 0 &&
-                    <span>
-                      {`Picked by: ${displayVoterNames(response.attributes.votes.data)}`}
-                    </span>
+                    <div>
+                      <span>
+                        Picked by:&nbsp;
+                      </span>
+                      <span>
+                        {displayVoterNames(response.attributes.votes.data)}
+                      </span>
+                    </div>
                 }
               </div>
               {response.attributes.votes.data.length > 0 && displayPoints(response)}

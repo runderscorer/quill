@@ -112,9 +112,23 @@
     padding: 20px;
     margin-bottom: 10px;
 
-    .details {
+    > .details {
       display: flex;
       justify-content: space-between;
+
+      .author {
+        text-transform: uppercase;
+      }
+
+      > div:nth-of-type(2) {
+        text-align: right;
+        width: 50%;
+
+        > span:last-of-type {
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+      }
     }
 
     .points {
