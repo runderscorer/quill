@@ -1,7 +1,20 @@
 .reactions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 3px;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #1a1a1a;
+
+  > div:first-of-type {
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+
+  .buttons {
+    display: flex;
+  }
 
   button.reaction {
     display: flex;

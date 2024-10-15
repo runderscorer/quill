@@ -21,30 +21,35 @@ function Reactions({ playerId, responseId }) {
 
   return (
     <div className='reactions'>
-      <button 
-        className={chosenReaction === 'like' ? 'reaction chosen' : 'reaction'}
-        disabled={!!chosenReaction}
-        onClick={handleClick}
-        value="like"
-      >
-        <span>❤️</span>
-      </button>
-      <button 
-        className={chosenReaction === 'funny' ? 'reaction chosen' : 'reaction'}
-        disabled={!!chosenReaction}
-        onClick={handleClick}
-        value="funny"
-      >
-        <span>🤣</span>
-      </button>
-      <button 
-        className={chosenReaction === 'smart' ? 'reaction chosen' : 'reaction'}
-        disabled={!!chosenReaction}
-        onClick={handleClick}
-        value="smart"
-      >
-        <span>🧠</span>
-      </button>
+      <div>
+        Add a reaction
+      </div>
+      <div className='buttons'>
+        <button 
+          className={chosenReaction === 'like' ? 'reaction chosen' : 'reaction'}
+          disabled={!!chosenReaction}
+          onClick={handleClick}
+          value="like"
+        >
+          <span>❤️</span>
+        </button>
+        <button 
+          className={chosenReaction === 'funny' ? 'reaction chosen' : 'reaction'}
+          disabled={!!chosenReaction}
+          onClick={handleClick}
+          value="funny"
+        >
+          <span>🤣</span>
+        </button>
+        <button 
+          className={chosenReaction === 'smart' ? 'reaction chosen' : 'reaction'}
+          disabled={!!chosenReaction}
+          onClick={handleClick}
+          value="smart"
+        >
+          <span>🧠</span>
+        </button>
+      </div>
     </div>
   )
 }
