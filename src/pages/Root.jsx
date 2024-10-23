@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import ActionCable from 'actioncable'
 
@@ -16,7 +16,13 @@ const Root = () => {
   const [player, setPlayer] = useState(getPlayer)
   const [gameInfo, setGameInfo] = useState(getGame)
   const [gameChannel, setGameChannel] = useState(null)
-  const [isHost, setIsHost] = useState(false)
+  const [elapsedTime, setElapsedTime] = useState(0)
+
+  const gameInfoRef = useRef(gameInfo)
+
+  useEffect(() => {
+    gameInfoRef.current = gameInfo
+  }, [gameInfo])
 
   const addPlayer = (newPlayer) => {
     setPlayer(newPlayer)
@@ -30,7 +36,7 @@ const Root = () => {
   }
 
   const handleSetGameInfo = (game) => {
-    setGameInfo(game)
+    setGameInfo((prevGame) => ({prevGame, ...game}))
     sessionStorage.setItem('game', JSON.stringify(game))
   }
 
@@ -44,8 +50,14 @@ const Root = () => {
         }
       },
       received: (data) => {
-        handleSetGameInfo(data.game.data.attributes)
-        data.type === 'GAME_STARTED' && navigate(`/games/${gameInfo.room_code}/play`)
+        if (data.type === 'ROUND_TIMER') {
+          if (data.round === gameInfoRef.current.round) {
+            setElapsedTime(data.elapsed_time)
+          }
+        } else {
+          handleSetGameInfo(data.game.data.attributes)
+          data.type === 'GAME_STARTED' && navigate(`/games/${gameInfo.room_code}/play`)
+        }
       },
       disconnected: () => {
         console.log('disconnected')
@@ -76,7 +88,8 @@ const Root = () => {
       player,
       handleSetGameInfo,
       gameInfo,
-      gameChannel
+      gameChannel,
+      elapsedTime
     }}/>
   )
 }

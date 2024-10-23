@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import API from '../../helpers/API'
 import CopyGenerator from '../../helpers/CopyGenerator'
+import Timer from './Timer'
 
 function ResponseForm() {
   const context = useOutletContext()
@@ -82,6 +83,7 @@ function ResponseForm() {
             name='response'
             value={responseText}
           />
+          <Timer />
           <div className='actions'>
             <button type='submit'>
               Submit
