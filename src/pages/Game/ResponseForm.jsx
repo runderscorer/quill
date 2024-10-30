@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import API from '../../helpers/API'
 import CopyGenerator from '../../helpers/CopyGenerator'
@@ -13,6 +13,9 @@ function ResponseForm() {
     room_code: roomCode
   } = gameInfo
   const { responses: { data: responseData } } = currentPrompt
+
+  const responseHeader = CopyGenerator.playerResponseHeader()
+  const responseHeaderRef = useRef(responseHeader)
 
   const getPlayerResponse = () => {
     const response = responseData.find(obj => obj.attributes.player_id == player.id)
@@ -56,7 +59,7 @@ function ResponseForm() {
   const renderPlayerResponse = () => (
     <div className='player-response-container'>
       <p className='bold italic'>
-        {CopyGenerator.playerResponseHeader()}
+        {responseHeaderRef.current}
       </p>
       <div className='player-response'>
         {playerResponse.text}

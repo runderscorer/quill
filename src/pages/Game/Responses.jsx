@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import Response from './Response'
 import CopyGenerator from '../../helpers/CopyGenerator'
@@ -18,6 +18,12 @@ function Responses({ responses }) {
     setVotedResponseId
   ] = useState(null)
 
+  const chooseWisely = CopyGenerator.chooseWisely()
+  const chooseWiselyRef = useRef(chooseWisely)
+
+  const choseWisely = CopyGenerator.choseWisely()
+  const choseWiselyRef = useRef(choseWisely)
+
   const playerResponse = responses.find(response => response.attributes.player_id === playerId)
 
   const excludePlayerResponse = () => responses.filter(response => response.attributes.player_id !== playerId)
@@ -31,9 +37,9 @@ function Responses({ responses }) {
 
   const renderResponsesHeader = () => {
     if (votedResponseId) {
-      return CopyGenerator.choseWisely()
+      return choseWiselyRef.current
     } else {
-      return CopyGenerator.chooseWisely()
+      return chooseWiselyRef.current
     }
   }
 
