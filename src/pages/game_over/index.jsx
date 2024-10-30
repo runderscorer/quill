@@ -40,7 +40,9 @@ function GameOver() {
 
     const handleLeaveGame = () => {
       API.leaveGame(player.id).then(response => {
-        console.log(response)
+        sessionStorage.removeItem('player')
+        sessionStorage.removeItem('game')
+
         navigate('/')
       })
     }
