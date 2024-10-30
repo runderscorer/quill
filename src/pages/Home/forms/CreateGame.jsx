@@ -6,8 +6,6 @@ import './CreateGame.css'
 function CreateGame({ handleGoBack, setErrorMessage }) {
   const context = useOutletContext()
   const { 
-    gameChannel,
-    gameInfo,
     handleSetGameInfo, 
     navigate,
     addPlayer 
@@ -52,7 +50,7 @@ function CreateGame({ handleGoBack, setErrorMessage }) {
         navigate(`/games/${roomCode}`)
       })
       .catch(error => {
-        setErrorMessage(error.response.data.errors)
+        setErrorMessage(error.response.data.error_message)
       })
   }
 
