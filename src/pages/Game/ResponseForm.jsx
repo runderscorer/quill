@@ -34,6 +34,11 @@ function ResponseForm() {
     setPlayerResponse
   ] = useState('')
 
+  const [
+    endOfRound,
+    setEndOfRound
+  ] = useState(false)
+
   useEffect(() => {
     const playerResponse = player ? getPlayerResponse() : ''
     setPlayerResponse(playerResponse)
@@ -86,11 +91,12 @@ function ResponseForm() {
             onChange={handleChange}
             name='response'
             value={responseText}
+            disabled={endOfRound}
           />
-          <Timer />
+          <Timer setEndOfRound={setEndOfRound} />
           <div className='actions'>
-            <button type='submit'>
-              Submit
+            <button type='submit' disabled={endOfRound} className={endOfRound ? 'round-over' : ''}>
+              {endOfRound ? "Time's up" : 'Submit'}
             </button>
           </div>
         </form>
@@ -107,4 +113,3 @@ function ResponseForm() {
 }
 
 export default ResponseForm
-

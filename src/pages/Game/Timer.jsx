@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import './Timer.css'
 
-function Timer() {
+function Timer({ setEndOfRound }) {
   const context = useOutletContext()
   const { gameInfo } = context
   const { round_ends_at: roundEndsAt } = gameInfo
@@ -32,6 +32,10 @@ function Timer() {
 
     if (elapsedTime >= 100 && interval.current) {
       clearInterval(interval.current)
+    }
+
+    if (elapsedTime >= 100) {
+      setEndOfRound(true)
     }
 
     return () => {
