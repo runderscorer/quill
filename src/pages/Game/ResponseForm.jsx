@@ -10,7 +10,8 @@ function ResponseForm() {
   const { gameInfo, player } = context
   const { 
     current_prompt: currentPrompt,
-    room_code: roomCode
+    room_code: roomCode,
+    round_ends_at: roundEndsAt
   } = gameInfo
   const { responses: { data: responseData } } = currentPrompt
 
