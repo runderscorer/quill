@@ -72,4 +72,8 @@ export default class API {
       }
     })
   }
+
+  static timerEnd = (roomCode, playerId) => {
+    return axios.patch(`${import.meta.env.VITE_BACKEND_URL}/games/${roomCode}/timer_end`, { player_id: playerId })
+  }
 }

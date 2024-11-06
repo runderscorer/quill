@@ -62,6 +62,14 @@ function ResponseForm() {
     })
   }
 
+  const handleEndOfRound = () => {
+    const { id: playerId, host } = player
+
+    setEndOfRound(true)
+
+    API.timerEnd(roomCode, playerId)
+  }
+
   const renderPlayerResponse = () => (
     <div className='player-response-container'>
       <p className='bold italic'>
@@ -93,7 +101,7 @@ function ResponseForm() {
             value={responseText}
             disabled={endOfRound}
           />
-          <Timer setEndOfRound={setEndOfRound} />
+          <Timer handleEndOfRound={handleEndOfRound} />
           <div className='actions'>
             <button type='submit' disabled={endOfRound} className={endOfRound ? 'round-over' : ''}>
               {endOfRound ? "Time's up" : 'Submit'}
