@@ -70,6 +70,14 @@ function ResponseForm() {
     API.timerEnd(roomCode, playerId)
   }
 
+  const handleClick = () => {
+    API.generateResponse(roomCode).then(response => {
+      let generatedText = response.data.text
+
+      setResponseText(generatedText)
+    })
+  } 
+
   const renderPlayerResponse = () => (
     <div className='player-response-container'>
       <p className='bold italic'>
@@ -103,8 +111,19 @@ function ResponseForm() {
           />
           <Timer handleEndOfRound={handleEndOfRound} />
           <div className='actions'>
-            <button type='submit' disabled={endOfRound} className={endOfRound ? 'round-over' : ''}>
+            <button 
+              type='submit' 
+              disabled={endOfRound} 
+              className={endOfRound ? 'round-over' : ''}
+            >
               {endOfRound ? "Time's up" : 'Submit'}
+            </button>
+            <button 
+              type='button' 
+              className='secondary-btn'
+              onClick={handleClick}
+            >
+              Write for me
             </button>
           </div>
         </form>
