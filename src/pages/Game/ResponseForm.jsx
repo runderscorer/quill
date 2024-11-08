@@ -10,7 +10,8 @@ function ResponseForm() {
   const { gameInfo, player } = context
   const { 
     current_prompt: currentPrompt,
-    room_code: roomCode
+    room_code: roomCode,
+    round_ends_at: roundEndsAt
   } = gameInfo
   const { responses: { data: responseData } } = currentPrompt
 
@@ -33,6 +34,11 @@ function ResponseForm() {
     setPlayerResponse
   ] = useState('')
 
+  const [
+    endOfRound,
+    setEndOfRound
+  ] = useState(false)
+
   useEffect(() => {
     const playerResponse = player ? getPlayerResponse() : ''
     setPlayerResponse(playerResponse)
@@ -54,6 +60,14 @@ function ResponseForm() {
     ).then(response => {
       setResponseText('') 
     })
+  }
+
+  const handleEndOfRound = () => {
+    const { id: playerId, host } = player
+
+    setEndOfRound(true)
+
+    API.timerEnd(roomCode, playerId)
   }
 
   const renderPlayerResponse = () => (
@@ -85,11 +99,12 @@ function ResponseForm() {
             onChange={handleChange}
             name='response'
             value={responseText}
+            disabled={endOfRound}
           />
-          <Timer />
+          <Timer handleEndOfRound={handleEndOfRound} />
           <div className='actions'>
-            <button type='submit'>
-              Submit
+            <button type='submit' disabled={endOfRound} className={endOfRound ? 'round-over' : ''}>
+              {endOfRound ? "Time's up" : 'Submit'}
             </button>
           </div>
         </form>
@@ -106,4 +121,3 @@ function ResponseForm() {
 }
 
 export default ResponseForm
-
