@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom'
 import API from '../../helpers/API'
 import CopyGenerator from '../../helpers/CopyGenerator'
 import Timer from './Timer'
+import Loading from '../../components/Loading'
 
 function ResponseForm() {
   const context = useOutletContext()
@@ -39,6 +40,16 @@ function ResponseForm() {
     setEndOfRound
   ] = useState(false)
 
+  const [
+    usedHelp,
+    setUsedHelp
+  ] = useState(false)
+
+  const [
+    isWriting,
+    setIsWriting
+  ] = useState(false)
+
   useEffect(() => {
     const playerResponse = player ? getPlayerResponse() : ''
     setPlayerResponse(playerResponse)
@@ -69,6 +80,18 @@ function ResponseForm() {
 
     API.timerEnd(roomCode, playerId)
   }
+
+  const handleClick = () => {
+    setIsWriting(true)
+
+    API.generateResponse(roomCode).then(response => {
+      let generatedText = response.data.text
+
+      setResponseText(generatedText)
+      setUsedHelp(true)
+      setIsWriting(false)
+    })
+  } 
 
   const renderPlayerResponse = () => (
     <div className='player-response-container'>
@@ -103,8 +126,25 @@ function ResponseForm() {
           />
           <Timer handleEndOfRound={handleEndOfRound} />
           <div className='actions'>
-            <button type='submit' disabled={endOfRound} className={endOfRound ? 'round-over' : ''}>
+            <button 
+              type='submit' 
+              disabled={endOfRound} 
+              className={endOfRound ? 'round-over' : ''}
+            >
               {endOfRound ? "Time's up" : 'Submit'}
+            </button>
+            <button 
+              type='button' 
+              className='secondary-btn'
+              disabled={usedHelp}
+              onClick={handleClick}
+            >
+              <Loading 
+                text='Writing'
+                ready={!isWriting}
+              >
+                Write for me
+              </Loading>
             </button>
           </div>
         </form>
