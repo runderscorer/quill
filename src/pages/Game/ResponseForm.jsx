@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom'
 import API from '../../helpers/API'
 import CopyGenerator from '../../helpers/CopyGenerator'
 import Timer from './Timer'
+import Loading from '../../components/Loading'
 
 function ResponseForm() {
   const context = useOutletContext()
@@ -39,6 +40,16 @@ function ResponseForm() {
     setEndOfRound
   ] = useState(false)
 
+  const [
+    usedHelp,
+    setUsedHelp
+  ] = useState(false)
+
+  const [
+    isWriting,
+    setIsWriting
+  ] = useState(false)
+
   useEffect(() => {
     const playerResponse = player ? getPlayerResponse() : ''
     setPlayerResponse(playerResponse)
@@ -71,10 +82,14 @@ function ResponseForm() {
   }
 
   const handleClick = () => {
+    setIsWriting(true)
+
     API.generateResponse(roomCode).then(response => {
       let generatedText = response.data.text
 
       setResponseText(generatedText)
+      setUsedHelp(true)
+      setIsWriting(false)
     })
   } 
 
@@ -121,9 +136,15 @@ function ResponseForm() {
             <button 
               type='button' 
               className='secondary-btn'
+              disabled={usedHelp}
               onClick={handleClick}
             >
-              Write for me
+              <Loading 
+                text='Writing'
+                ready={!isWriting}
+              >
+                Write for me
+              </Loading>
             </button>
           </div>
         </form>

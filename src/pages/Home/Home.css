@@ -47,6 +47,10 @@ button {
 .secondary-btn {
   background-color: #3b3b3b;
   color: white;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .actions {

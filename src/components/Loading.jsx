@@ -1,9 +1,9 @@
-function Loading({ ready, children }) {
+function Loading({ ready, text = 'Loading', children }) {
   if (ready) {
     return children;
   } else {
     return (
-      <div>Loading...</div>
+      <div>{text}...</div>
     );
   }
 }
