@@ -4,6 +4,8 @@ import API from '../../helpers/API'
 import CopyGenerator from '../../helpers/CopyGenerator'
 import Timer from './Timer'
 import Loading from '../../components/Loading'
+import { motion } from 'motion/react'
+import { popIn } from '../../animations'
 
 function ResponseForm() {
   const context = useOutletContext()
@@ -94,7 +96,10 @@ function ResponseForm() {
   } 
 
   const renderPlayerResponse = () => (
-    <div className='player-response-container'>
+    <motion.div 
+      className='player-response-container'
+      {...popIn}
+    >
       <p className='bold italic'>
         {responseHeaderRef.current}
       </p>
@@ -106,7 +111,7 @@ function ResponseForm() {
           Waiting for others to finish writing...
         </button>
       </div>
-    </div>
+    </motion.div>
   )
 
   const renderResponseForm = () => {

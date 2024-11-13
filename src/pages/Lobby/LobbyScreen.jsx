@@ -4,6 +4,8 @@ import './Lobby.css'
 import JoinGame from '../../components/JoinGame'
 import API from '../../helpers/API'
 import Helper from '../../helpers/Helper'
+import { motion } from 'motion/react'
+import { popIn } from '../../animations'
 
 
 function LobbyScreen() {
@@ -118,9 +120,10 @@ function LobbyScreen() {
       <div className='players'>
         {
           players && players.data.map(player => (
-            <div 
+            <motion.div 
               className='player'
               key={player.id}
+              {...popIn}
             >
               <div className='quill'/>
               <div className='dots' />
@@ -132,7 +135,7 @@ function LobbyScreen() {
                   )
                 }
               </div>
-            </div>
+            </motion.div>
           ))
         }
       </div>
