@@ -13,6 +13,10 @@
     color: #ff474c;
     height: 24px;
     margin: 0;
+
+    p {
+      text-align: center;
+    }
   }
 
   form {

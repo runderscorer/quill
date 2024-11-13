@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import API from '../../../helpers/API'
 import './CreateGame.css'
+import { motion } from 'motion/react'
+import { slideDownFade } from '../../../animations'
 
 function CreateGame({ handleGoBack, setErrorMessage }) {
   const context = useOutletContext()
@@ -38,7 +40,7 @@ function CreateGame({ handleGoBack, setErrorMessage }) {
     e.preventDefault()
 
     if (!formIsValid()) {
-      setErrorMessage('Please enter a player name and room code')
+      setErrorMessage('Please enter a player name and room code.')
       return
     }
 
@@ -55,7 +57,11 @@ function CreateGame({ handleGoBack, setErrorMessage }) {
   }
 
   return (
-    <form className="flex-col flex-center" onSubmit={handleSubmit}>
+    <motion.form 
+      className="flex-col flex-center" 
+      onSubmit={handleSubmit}
+      {...slideDownFade}
+    >
       <input
         className="mb10"
         type="text"
@@ -81,7 +87,7 @@ function CreateGame({ handleGoBack, setErrorMessage }) {
           Back
         </button>
       </div>
-    </form>
+    </motion.form>
   )
 }
 
