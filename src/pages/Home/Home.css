@@ -6,6 +6,7 @@
 
 .start {
   border-radius: 10px;
+  height: 410px;
 
   .error {
     font-size: 14px;

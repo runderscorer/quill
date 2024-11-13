@@ -171,4 +171,8 @@
   .response p {
     text-align: center;
   }
+
+  .prompt {
+    width: 700px;
+  }
 }

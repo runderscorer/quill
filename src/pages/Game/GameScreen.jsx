@@ -4,6 +4,7 @@ import ResponseForm from "./ResponseForm"
 import Responses from "./Responses"
 import RoundResults from "./RoundResults"
 import JoinGame from "../../components/JoinGame"
+import useTypingEffect from '../../helpers/useTypingEffect'
 
 function GameScreen() {
   const context = useOutletContext()
@@ -48,6 +49,8 @@ function GameScreen() {
       />
   )
 
+  const { text: animatedPrompt } = useTypingEffect(currentPrompt.text)
+
   return (
     <div>
       {
@@ -61,9 +64,9 @@ function GameScreen() {
                 {`"${currentPrompt.title}" by ${currentPrompt.author}`}
               </p>
             </div>
-            <div>
+            <div className='prompt'>
               <p className='italic'>
-                {currentPrompt.text}
+                {animatedPrompt}
               </p>
               <p>
                 ...
