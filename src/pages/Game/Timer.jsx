@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import './Timer.css'
+import { useAnimate } from 'motion/react'
+import { shakeX } from '../../animations'
 
 function Timer({ handleEndOfRound }) {
   const context = useOutletContext()
@@ -8,6 +10,7 @@ function Timer({ handleEndOfRound }) {
   const { round_ends_at: roundEndsAt } = gameInfo
 
   const interval = useRef
+  const [scope, animate] = useAnimate()
 
   const [
     elapsedTime,
@@ -30,6 +33,13 @@ function Timer({ handleEndOfRound }) {
       setElapsedTime(100)
     }
 
+    if (timeLeft <= 10) {
+      animate(scope.current, {
+        scaleY: [1, 1.5, 1],
+        duration: 1 
+      })
+    }
+
     if (elapsedTime >= 100 && interval.current) {
       clearInterval(interval.current)
     }
@@ -44,7 +54,10 @@ function Timer({ handleEndOfRound }) {
   }, [elapsedTime, roundEndsAt])
 
   return (
-    <div className='timer-container'>
+    <div 
+      className='timer-container'
+      ref={scope}
+    >
       <div 
         className='timer' 
         style={{width: `${elapsedTime}%`}}

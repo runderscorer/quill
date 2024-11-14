@@ -3,6 +3,8 @@ import { useOutletContext } from 'react-router-dom'
 import Response from './Response'
 import CopyGenerator from '../../helpers/CopyGenerator'
 import PlayerResponse from './PlayerResponse'
+import { motion } from 'motion/react'
+import { slideUpFade } from '../../animations'
 
 function Responses({ responses }) {
   const context = useOutletContext()
@@ -48,7 +50,10 @@ function Responses({ responses }) {
   })
 
   return (
-    <div className='responses-container'>
+    <motion.div 
+      className='responses-container'
+      {...slideUpFade}
+    >
       <div>
         {
           playerResponse && 
@@ -75,7 +80,7 @@ function Responses({ responses }) {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

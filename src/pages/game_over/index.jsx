@@ -4,6 +4,9 @@ import Loading from "../../components/Loading"
 import Superlatives from './Superlatives'
 import API from "../../helpers/API"
 import './GameOver.css'
+import { motion } from 'motion/react'
+import { parentStagger, childStagger } from '../../animations'
+import { use } from 'motion/react-client'
 
 function GameOver() {
   const context = useOutletContext()
@@ -17,6 +20,11 @@ function GameOver() {
     errorMessage,
     setErrorMessage
   ] = useState(null)
+
+  const [
+    displaySuperlatives,
+    setDisplaySuperlatives
+  ] = useState(false)
 
   const renderGameOver = () => {
     const { 
@@ -57,13 +65,20 @@ function GameOver() {
             The final tally of triumphs and trials!
           </span>
         </div>
-        <div className='winners-and-players'>
+        <motion.div 
+          className='winners-and-players'
+          variants={parentStagger}
+          initial='hidden'
+          animate='show'
+          onAnimationComplete={() => setDisplaySuperlatives(true)}
+        >
           <div className='winners'>
             {
               winners && winners.map(winner => (
-                <div 
+                <motion.div 
                   className='player'
                   key={winner.id}
+                  variants={childStagger}
                 >
                   <div className='name'>
                     <span>
@@ -77,16 +92,17 @@ function GameOver() {
                       points
                     </span>
                   </div>
-                </div>
+                </motion.div>
               ))
             }
           </div>
           <div className='players'>
             {
               notWinners && notWinners.map(player => (
-                <div 
+                <motion.div 
                   className='player'
                   key={player.id}
+                  variants={childStagger}
                 >
                   <div className='name'>
                     <span>
@@ -100,14 +116,14 @@ function GameOver() {
                       points
                     </span>
                   </div>
-                </div>
+                </motion.div>
               ))
             }
           </div>
-        </div>
+        </motion.div>
 
         {
-          (mostLiked || funniest || smartest) && 
+          (mostLiked || funniest || smartest) && displaySuperlatives &&
             <Superlatives
               mostLiked={mostLiked}
               funniest={funniest}

@@ -4,6 +4,15 @@
   padding: 25px;
   border-radius: 10px;
   margin-bottom: 50px;
+
+  p {
+    font-family: 'GoudyBookletter1911', 'Times New Roman', Times, serif;
+  }
+
+  .round {
+    font-family: 'PirataOne';
+    font-size: 26px;
+  }
 }
 
 .bold {

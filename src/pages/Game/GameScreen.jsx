@@ -57,10 +57,10 @@ function GameScreen() {
         player && (
           <div className='game'>
             <div className='underline'>
-              <p className='bold'>
+              <p className='round'>
                 {`Round ${round}`}
               </p>
-              <p>
+              <p className='bold'>
                 {`"${currentPrompt.title}" by ${currentPrompt.author}`}
               </p>
             </div>

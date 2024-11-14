@@ -3,6 +3,9 @@ import { useOutletContext } from 'react-router-dom'
 import CreateGame from './forms/CreateGame'
 import './Home.css'
 import API from '../../helpers/API'
+import { motion } from 'motion/react'
+import { slideDownFade } from '../../animations'
+import ErrorMessage from '../../components/ErrorMessage'
 
 function Home() {
   const context = useOutletContext()
@@ -60,7 +63,11 @@ function Home() {
 
   const renderFindGame = () => {
     return (
-      <form className="flex-col flex-center" onSubmit={handleSubmit}>
+      <motion.form 
+        className="flex-col flex-center" 
+        onSubmit={handleSubmit}
+        {...slideDownFade}
+      >
         <input
           type="text"
           placeholder="Enter Room Code"
@@ -79,23 +86,23 @@ function Home() {
             Back
           </button>
         </div>
-      </form>
+      </motion.form>
     )
   }
 
   return (
     <div className="start">
       <div>
-        <h1>
+        <h1 className="title">
           Prose&nbsp;
           <span>
             and
           </span> 
           &nbsp;Cons
         </h1>
-        <p className="error">
-          {errorMessage}
-        </p>
+        <div className="error">
+          {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
+        </div>
         {action === '' && renderButtons()}
         {action === 'find' && renderFindGame()}
         {

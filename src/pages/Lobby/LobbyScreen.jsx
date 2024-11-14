@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useParams, useOutletContext } from 'react-router-dom'
 import './Lobby.css'
+import ErrorMessage from '../../components/ErrorMessage'
 import JoinGame from '../../components/JoinGame'
 import API from '../../helpers/API'
 import Helper from '../../helpers/Helper'
+import { motion } from 'motion/react'
+import { popIn } from '../../animations'
 
 
 function LobbyScreen() {
@@ -82,9 +85,9 @@ function LobbyScreen() {
 
   const renderButtons = () => (
     <div>
-      <p className='error'>
-        {errorMessage}
-      </p>
+      <div className='error'>
+        {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
+      </div>
       <div className='actions'>
         <div className='left'>
           {renderStartGame()}
@@ -118,9 +121,10 @@ function LobbyScreen() {
       <div className='players'>
         {
           players && players.data.map(player => (
-            <div 
+            <motion.div 
               className='player'
               key={player.id}
+              {...popIn}
             >
               <div className='quill'/>
               <div className='dots' />
@@ -132,7 +136,7 @@ function LobbyScreen() {
                   )
                 }
               </div>
-            </div>
+            </motion.div>
           ))
         }
       </div>

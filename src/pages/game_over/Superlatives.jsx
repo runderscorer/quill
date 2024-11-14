@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react'
 import './Superlatives.css'
+import { motion } from 'motion/react'
+import { slideUpFade } from '../../animations'
 
 function Superlatives({ mostLiked, funniest, smartest }) {
   return (
-    <div className='superlatives'>
+    <motion.div 
+      className='superlatives'
+      {...slideUpFade}
+    >
       {
         mostLiked &&
           <div className='container'>
@@ -40,7 +45,7 @@ function Superlatives({ mostLiked, funniest, smartest }) {
             <span>with {smartest.count} 🧠 votes</span>
           </div>
       }
-    </div>
+    </motion.div>
   )
 }
 

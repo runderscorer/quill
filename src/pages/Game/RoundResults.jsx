@@ -1,4 +1,6 @@
 import API from "../../helpers/API"
+import { motion } from 'motion/react'
+import { delayedRotatedPopIn } from "../../animations"
 
 function RoundResults({ 
   finalRound,
@@ -16,17 +18,17 @@ function RoundResults({
     if (response.attributes.correct) {
       return (
         <div className='points correct'>
-          <span>
+          <motion.span {...delayedRotatedPopIn}>
             + 300
-          </span>
+          </motion.span>
         </div>
       )
     } else {
       return (
         <div className='points'>
-          <span>
+          <motion.span {...delayedRotatedPopIn}>
             {`+ 100 ${numberOfVotes > 1 ? `x ${numberOfVotes}` : ''}`} 
-          </span>
+          </motion.span>
         </div>
       )
     }
