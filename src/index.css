@@ -103,6 +103,10 @@ p {
       margin-left: 10px;
     }
   }
+
+  .error p {
+    text-align: center;
+  }
 }
 
 @media (prefers-color-scheme: light) {

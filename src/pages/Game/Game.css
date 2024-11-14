@@ -4,6 +4,10 @@
   padding: 25px;
   border-radius: 10px;
   margin-bottom: 50px;
+
+  p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
 }
 
 .bold {

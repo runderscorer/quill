@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useOutletContext } from 'react-router-dom'
 import './Lobby.css'
+import ErrorMessage from '../../components/ErrorMessage'
 import JoinGame from '../../components/JoinGame'
 import API from '../../helpers/API'
 import Helper from '../../helpers/Helper'
@@ -84,9 +85,9 @@ function LobbyScreen() {
 
   const renderButtons = () => (
     <div>
-      <p className='error'>
-        {errorMessage}
-      </p>
+      <div className='error'>
+        {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
+      </div>
       <div className='actions'>
         <div className='left'>
           {renderStartGame()}
