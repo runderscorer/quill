@@ -27,6 +27,7 @@ function Home() {
   ] = useState(null)
 
   const handleChange = (e) => {
+    setErrorMessage('')
     setRoomCode(e.target.value)
   }
 
