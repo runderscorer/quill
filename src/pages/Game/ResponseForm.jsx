@@ -78,9 +78,9 @@ function ResponseForm() {
   const handleEndOfRound = () => {
     const { id: playerId, host } = player
 
-    setEndOfRound(true)
+    // setEndOfRound(true)
 
-    API.timerEnd(roomCode, playerId)
+    // API.timerEnd(roomCode, playerId)
   }
 
   const handleClick = () => {

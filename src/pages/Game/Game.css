@@ -6,7 +6,12 @@
   margin-bottom: 50px;
 
   p {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'GoudyBookletter1911', 'Times New Roman', Times, serif;
+  }
+
+  .round {
+    font-family: 'PirataOne';
+    font-size: 26px;
   }
 }
 

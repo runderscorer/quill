@@ -7,6 +7,8 @@
     padding-bottom: 40px;
 
     h1 {
+      font-family: 'PirataOne';
+      font-size: 70px;
       margin-bottom: 10px;
     }
   }

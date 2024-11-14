@@ -93,7 +93,7 @@ function Home() {
   return (
     <div className="start">
       <div>
-        <h1>
+        <h1 className="title">
           Prose&nbsp;
           <span>
             and

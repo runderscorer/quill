@@ -20,16 +20,13 @@
     padding-bottom: 30px;
 
     .top {
-      font-size: 24px;
-      text-transform: uppercase;
-      font-weight: bold;
-      font-style: italic;
+      font-family: 'PirataOne', serif;
+      font-size: 40px;
       margin-bottom: 0;
     }
 
     .bottom {
       font-size: 20px;
-      font-style: italic;
       text-transform: uppercase;
       margin: 0;
     }

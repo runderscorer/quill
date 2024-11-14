@@ -1,3 +1,5 @@
+import { delay } from "motion"
+
 export const slideDownFade = {
   initial: { 
     y: 0, 
@@ -34,6 +36,20 @@ export const popIn = {
   },
   transition: {
     duration: 0.4
+  }
+}
+
+export const delayedRotatedPopIn = {
+  initial: {
+    scale: 0
+  },
+  animate: {
+    scale: [0, 1.5, 1],
+    rotateX: [0, 360]
+  },
+  transition: {
+    duration: 0.4,
+    delay: 1
   }
 }
 

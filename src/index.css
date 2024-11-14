@@ -121,3 +121,15 @@ p {
     background-color: #f9f9f9;
   }
 }
+
+@font-face {
+  font-family: 'PirataOne';
+  src:local('PirataOne-Regular'), 
+  url('./assets/fonts/PirataOne-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'GoudyBookletter1911';
+  src:local('GoudyBookletter1911-Regular'), 
+  url('./assets/fonts/GoudyBookletter1911.ttf');
+}
